@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TongManage.Attribute;
 
 namespace TongManage.Controllers
 {
     public class HomeController : Controller
-    {
-        public ActionResult Index()
+    { 
+        [Fixture]
+        public string Index()
         {
-            return View();
+            return "cds";
         }
 
         public ActionResult About()
