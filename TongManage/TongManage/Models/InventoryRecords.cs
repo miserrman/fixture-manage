@@ -4,6 +4,7 @@
  * author: zhouxing
  * date: 2020/01/22
  */
+ //test
 namespace Models
 {
     public class InventoryRecords
