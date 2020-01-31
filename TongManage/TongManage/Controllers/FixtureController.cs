@@ -13,12 +13,7 @@ namespace TongManage.Controllers
 {
     public class FixtureController : Controller
     {
-        // GET: Fixture
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+        /*
         // GET: Fixture/Details/5
         public string Details(int id, string role)
         {
@@ -26,71 +21,51 @@ namespace TongManage.Controllers
             string res = JsonConvert.SerializeObject(r);
             return res;
         }
+        */
 
-        // GET: Fixture/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Fixture/Create
+        /// <summary>
+        /// 创建工具夹类别
+        /// </summary>
+        /// <param name="body">工具夹类别类</param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public string CreateDef(string body)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return null;
         }
 
-        // GET: Fixture/Edit/5
-        public ActionResult Edit(int id)
+        /// <summary>
+        /// 修改工具夹类别信息
+        /// </summary>
+        /// <param name="id">路径id</param>
+        /// <param name="body">工具夹类别类</param>
+        /// <returns></returns>
+        [HttpPut]
+        public string UpdateDef(int id, string body)
         {
-            return View();
+            return null;
         }
 
-        // POST: Fixture/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        /// <summary>
+        /// 得到工具夹类别
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public string GetDefById(int id)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return null;
         }
 
-        // GET: Fixture/Delete/5
-        public ActionResult Delete(int id)
+        /// <summary>
+        /// 获取工具夹报表文件
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public string GetDefChart()
         {
-            return View();
+            return null;
         }
-
-        // POST: Fixture/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+      
     }
 }
