@@ -12,7 +12,8 @@ namespace TongManage.Attribute
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            return true;
+            string token = httpContext.Request.Headers["token"];
+            return true ;
         }
     }
 }

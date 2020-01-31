@@ -85,3 +85,6 @@ D:\tong_manage\TongManage\TongManage\bin\zh-Hans\System.Web.WebPages.Razor.resou
 D:\tong_manage\TongManage\TongManage\obj\Debug\TongManage.csproj.CopyComplete
 D:\tong_manage\TongManage\TongManage\obj\Debug\TongManage.dll
 D:\tong_manage\TongManage\TongManage\obj\Debug\TongManage.pdb
+D:\tong_manage\TongManage\TongManage\bin\JWT.dll
+D:\tong_manage\TongManage\TongManage\bin\JWT.pdb
+D:\tong_manage\TongManage\TongManage\bin\JWT.xml
