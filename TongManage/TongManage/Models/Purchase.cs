@@ -4,7 +4,7 @@
  * author: linlianhui
  * date: 2020/01/22
  */
-namespace Models
+namespace TongManage.Models
 {
     public class Purchase
     {

@@ -15,6 +15,11 @@ namespace TongManage.Controllers
             return "cds";
         }
 
+        public string Create()
+        {
+            return "create";
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

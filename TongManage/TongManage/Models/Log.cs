@@ -4,7 +4,7 @@
  * author: 
  * date: 
  */
-namespace Models
+namespace TongManage.Models
 {
     public class Log
     {

@@ -5,7 +5,7 @@
  * date: 2020/01/22
  */
  //test
-namespace Models
+namespace TongManage.Models
 {
     public class InventoryRecords
     {

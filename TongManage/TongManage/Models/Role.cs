@@ -4,7 +4,7 @@
  * author: linlianhui
  * date: 2020/01/22
  */
-namespace Models
+namespace TongManage.Models
 {
     public class Role
     {
@@ -19,5 +19,6 @@ namespace Models
         public DateTime GmtCreate { get => gmtCreate; set => gmtCreate = value; }
         public DateTime GmtModified { get => gmtModified; set => gmtModified = value; }
         public bool IsDeleted { get => isDeleted; set => isDeleted = value; }
+
     }
 }
