@@ -9,6 +9,9 @@ namespace TongManage
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new FixtureAttribute());
+            filters.Add(new HandleErrorAttribute());
+            //注册筛选器
+            filters.Add(new CustomerFilterAttribute());
         }
     }
 }

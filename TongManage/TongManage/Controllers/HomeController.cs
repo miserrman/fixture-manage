@@ -4,33 +4,26 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TongManage.Attribute;
+using TongManage.Utils;
 
 namespace TongManage.Controllers
 {
     public class HomeController : Controller
-    { 
-        [Fixture]
-        public string Index()
+    {
+        [CheckAttribute(1)]
+        public string Index()//此方法需要进行token验证
         {
-            return "cds";
+            return "success!";
         }
 
-        public string Create()
+        [CheckAttribute(0)]
+        public string About()//此方法不需要进行token验证
         {
-            return "create";
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return "success!";
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }
