@@ -20,7 +20,6 @@ namespace TongManage.Controllers
             tokenInfo.Pwd = "password";
             tokenInfo.UserName = "tel";
             string token = TokenHelper.GenToken(tokenInfo);
-
             return "登录成功";
         }
     }
