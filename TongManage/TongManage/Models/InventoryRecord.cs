@@ -7,7 +7,7 @@
  //test
 namespace TongManage.Models
 {
-    public class InventoryRecords
+    public class InventoryRecord
     {
         private int id;
         private DateTime logOn;
