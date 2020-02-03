@@ -1,1 +1,66 @@
-﻿
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Ibatis" xmlns="http://ibatis.apache.org/mapping"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!--创建类的别名-->
+  <alias>
+    <typeAlias alias="Log" type="TongManage.Models.Log, TongManage" />
+  </alias>
+
+  <resultMaps>
+    <!--Log类与db表的映射-->
+    <resultMap id="Log" class="Log">
+    </resultMap>
+  </resultMaps>
+
+  <statements>
+
+    <!--查询所有记录-->
+    <select id="SelectAllLogs" resultMap="Log">
+      SELECT * from fixture_inventory_records
+      WHERE is_deleted = 0
+    </select>
+
+    <!--查询单条记录-->
+    <select id="SelectLogById" parameterClass="int" resultMap="Log" >
+      SELECT * from fixture_inventory_records
+      WHERE id = #value# AND is_deleted = 0
+    </select>
+
+    <!--插入新记录-->
+    <insert id="InsertLog" parameterClass="Log">
+      INSERT into fixture_inventory_records ( log_on, log_by, handled_by, in_or_out,
+      production_line, tong_Id, location, gmt_create, gmt_modified, is_deleted)
+      values ( #LogOn#, #LogBy#, #HandledBy#, #InOrOut#, #ProductionLine#,
+      #TongId#, #Location#, #GmtCreate#, #GmtModified#, #IsDeleted#)
+      <selectKey resultClass="int" type="post" property="id" >
+        select LAST_INSERT_ID() as value
+      </selectKey>
+    </insert>
+
+    <!--更新单条记录-->
+    <update id="UpdateLog" parameterClass="Log">
+      UPDATE fixture_inventory_records SET
+      Log_On = #LogOn#,
+      Log_By = #LogBy#,
+      Handled_By = #HandledBy#,
+      In_Or_Out = #InOrOut#,
+      Production_Line = #ProductionLine#,
+      Tong_Id = #TongId#,
+      Location = #Location#,
+      Gmt_Create = #GmtCreate#,
+      Gmt_Modified = #GmtModified#,
+      WHERE id = #Id# AND is_deleted = 0
+    </update>
+
+    <!--根据主键删除单条记录-->
+    <update id="DeleteLogById" parameterClass="int">
+      UPDATE fixture_inventory_records
+      SET Is_Deleted = 1
+      WHERE id = #value#
+    </update>
+
+  </statements>
+
+</sqlMap>
+

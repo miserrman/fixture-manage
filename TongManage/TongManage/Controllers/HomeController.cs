@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TongManage.Attribute;
+using TongManage.Daos;
 using TongManage.Utils;
 
 namespace TongManage.Controllers
@@ -13,6 +14,8 @@ namespace TongManage.Controllers
         [CheckAttribute(1)]
         public string Index()//此方法需要进行token验证
         {
+            InventoryRecordDao inventoryRecordDao = new InventoryRecordDao();
+            inventoryRecordDao.selectAllInventoryRecords();
             return "success!";
         }
 
