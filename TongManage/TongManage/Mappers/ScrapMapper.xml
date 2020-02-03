@@ -38,7 +38,7 @@
     <!--插入新记录-->
     <insert id="InsertScrap" parameterClass="Scrap">
       INSERT into fixture_scrap ( Operator_Id, Log_On, Tong_Id, Description, Gmt_Create, Gmt_Modified, Is_Deleted)
-      values ( #OperatorId#, #Log_On#, #TongId#, #Description#, #GmtCreate#, #GmtModified#, #IsDeleted#)
+      values ( #OperatorId#, #LogOn#, #TongId#, #Description#, #GmtCreate#, #GmtModified#, #IsDeleted#)
       <selectKey resultClass="int" type="post" property="id" >
         select LAST_INSERT_ID() as value
       </selectKey>
@@ -48,7 +48,7 @@
     <update id="UpdateScrap" parameterClass="Scrap">
       UPDATE fixture_scrap SET
       Operator_Id = #OperatorId#,
-      Log_On = #Log_On#,
+      Log_On = #LogOn#,
       Tong_Id = #TongId#,
       Description = #Description#,
       Gmt_Create = #GmtCreate#,

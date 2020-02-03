@@ -60,10 +60,10 @@
     <!--更新单条记录-->
     <update id="UpdateTongsDefinition" parameterClass="TongsDefinition">
       UPDATE fixture_tongs_definition SET
-      Workcell_Id = #RepairOn#,
-      Family_Id = #TongId#,
-      Code = #Description#,
-      Name = #RepairOverOn#,
+      Workcell_Id = #WorkcellId#,
+      Family_Id = #FamilyId#,
+      Code = #Code#,
+      Name = #Name#,
       Model = #Model#,
       Part_No = #PartNo#,
       Userd_For = #UserdFor#,

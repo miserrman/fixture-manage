@@ -51,7 +51,7 @@
     </update>
 
     <!--根据主键删除单条记录-->
-    <update id="DeleteInventoryRecordById" parameterClass="int">
+    <update id="DeleteProductionLineById" parameterClass="int">
       UPDATE fixture_production_line
       SET Is_Deleted = 1
       WHERE id = #value#
