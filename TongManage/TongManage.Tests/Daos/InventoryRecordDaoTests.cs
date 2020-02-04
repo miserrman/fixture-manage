@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TongManage.Models;
 
 namespace TongManage.Daos.Tests
 {
@@ -16,32 +17,36 @@ namespace TongManage.Daos.Tests
         [TestMethod()]
         public void selectAllInventoryRecordsTest()
         {
-            inventoryRecordDao.selectAllInventoryRecords();
-            //Assert.Fail();
+            IList<InventoryRecord> IRList = inventoryRecordDao.selectAllInventoryRecords();
         }
 
         [TestMethod()]
         public void selectInventoryRecordByIdTest()
         {
-            Assert.Fail();
+            InventoryRecord IR = inventoryRecordDao.selectInventoryRecordById(2);
         }
 
         [TestMethod()]
         public void insertInventoryRecordTest()
         {
-            Assert.Fail();
+            InventoryRecord inventoryRecord = new InventoryRecord();
+            inventoryRecord.Location = "Xiamen";
+            inventoryRecordDao.insertInventoryRecord(inventoryRecord);
         }
 
         [TestMethod()]
         public void updateInventoryRecordTest()
         {
-            Assert.Fail();
+            InventoryRecord inventoryRecord = new InventoryRecord();
+            inventoryRecord.Id = 2;
+            inventoryRecord.Location = "Fujian";
+            inventoryRecordDao.updateInventoryRecord(inventoryRecord);
         }
 
         [TestMethod()]
         public void deleteInventoryRecordByIdTest()
         {
-            Assert.Fail();
+            inventoryRecordDao.deleteInventoryRecordById(2);
         }
     }
 }

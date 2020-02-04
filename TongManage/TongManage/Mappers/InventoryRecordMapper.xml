@@ -60,7 +60,7 @@
       Tong_Id = #TongId#,
       Location = #Location#,
       Gmt_Create = #GmtCreate#,
-      Gmt_Modified = #GmtModified#,
+      Gmt_Modified = #GmtModified#
       WHERE id = #Id# AND is_deleted = 0
     </update>
 
