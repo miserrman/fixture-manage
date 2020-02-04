@@ -39,7 +39,7 @@ namespace TongManage.Controllers
         /// </summary>
         /// <param name="id">id</param>
         /// <returns></returns>
-        [HttpUpdate]
+        [HttpPut]
         public string UpdateRecord(int id)
         {
             return null;

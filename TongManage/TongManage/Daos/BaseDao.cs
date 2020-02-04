@@ -6,6 +6,10 @@ using System.Web;
 
 namespace TongManage.Daos
 {
+    /// <summary>
+    /// author: linlianhui
+    /// date: 2020/2/3
+    /// </summary>
     public class BaseDao
     {
         public static int Insert<T>(string statementName, T t)

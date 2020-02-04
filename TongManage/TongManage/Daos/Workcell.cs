@@ -6,6 +6,10 @@ using TongManage.Models;
 
 namespace TongManage.Daos
 {
+    /// <summary>
+    /// author: rentianhe
+    /// date: 2020/2/3
+    /// </summary>
     public class WorkcellDao
     {
         public IList<Workcell> selectAllWorkcells()
