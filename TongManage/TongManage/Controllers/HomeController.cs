@@ -14,8 +14,6 @@ namespace TongManage.Controllers
         [CheckAttribute(1)]
         public string Index()//此方法需要进行token验证
         {
-            InventoryRecordDao inventoryRecordDao = new InventoryRecordDao();
-            inventoryRecordDao.selectAllInventoryRecords();
             return "success!";
         }
 
