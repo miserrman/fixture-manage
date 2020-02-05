@@ -8,11 +8,14 @@ using System.Net.Http;
 using TongManage.Models;
 using Newtonsoft.Json;
 using System.Data.SqlClient;
+using TongManage.Utils;
+using TongManage.Services;
 
 namespace TongManage.Controllers
 {
     public class RepairController : Controller
     {
+        static RepairService repairService = new RepairService();
         /*
         // GET: Fixture/Details/5
         public string Details(int id, string role)
@@ -31,7 +34,11 @@ namespace TongManage.Controllers
         [HttpPost]
         public string CreateRecord(string body)
         {
-            return null;
+            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            //待补充
+            RepairRecord repairRecord = JSONHelper.JSONToObject<RepairRecord>(body);
+            RepairRecord result = repairService.CreateRecord(repairRecord);
+            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
         }
 
         /// <summary>
@@ -40,9 +47,15 @@ namespace TongManage.Controllers
         /// <param name="id">id</param>
         /// <returns></returns>
         [HttpPut]
-        public string UpdateRecord(int id)
+        public string UpdateRecord(int id,string body)
         {
-            return null;
+            string token=HttpContext.Request.Headers["Authorization"];
+            RepairRecord repairRecord = JSONHelper.JSONToObject<RepairRecord>(body);
+            RepairRecord result = repairService.UpdateRecord(id,repairRecord);
+            if(result!=null)
+            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
+            else
+                return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
 
         /// <summary>
@@ -52,7 +65,8 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetCompleteRecord()
         {
-            return null;
+            List<RepairRecord> result = repairService.GetCompleteRecord();
+            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
         }
 
         /// <summary>
@@ -62,7 +76,8 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetNotCompleteRecord()
         {
-            return null;
+            List<RepairRecord> result = repairService.GetNotCompleteRecord();
+            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
         }
 
         /// <summary>
@@ -73,7 +88,13 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetRecord(int id)
         {
-            return null;
+            RepairRecord result = repairService.GetRecord(id);
+            if (result != null)
+            {
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
+            }
+            else
+                return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
 
         /// <summary>
@@ -83,18 +104,23 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetRepairChart()
         {
-            return null;
+            List<RepairRecord> result = repairService.GetRepairChart();
+            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
         }
 
         /// <summary>
-        /// 获取工夹具维修报表
+        /// 删除记录
         /// </summary>
         /// <param name="id">id</param>
         /// <returns></returns>
         [HttpDelete]
         public string DeleteRecordById(int id)
         {
-            return null;
+            int result = repairService.DeleteRecordById(id);
+            if(id==1)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok());
+            else
+                return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
     }
 }

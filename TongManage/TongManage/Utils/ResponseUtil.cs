@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+
+/// <summary>
+/// author: ZhouXing
+/// date: 2020/2/1
+/// </summary>
+
 namespace TongManage.Utils
 {
     //401, "参数不对"

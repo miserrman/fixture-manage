@@ -4,7 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TongManage.Utils;
+using TongManage.Daos;
+using TongManage.Models;
 
+/// <summary>
+/// author: ZhouXing
+/// date: 2020/2/1
+/// </summary>
 namespace TongManage.Attribute
 {
     public class FixtureAttribute : AuthorizeAttribute
@@ -30,6 +36,7 @@ namespace TongManage.Attribute
 
     public class CustomerFilterAttribute:ActionFilterAttribute
     {
+        static UserDao userDao=new UserDao();
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             //获取当前方法上的所有自定义特性，false表示不递归查找
@@ -43,16 +50,8 @@ namespace TongManage.Attribute
                     //强制转换成特性的对象（特性就是一个比较特殊的类，本质上还是类）
                     CheckAttribute attr = (CheckAttribute)item;
                     //下面可以对特性的数据做一些校验，比如：校验此方法需要什么样的权限才可以访问,校验请求端的IP地址是否在白名单等
-                    if (attr.PermissionsID == 1)//第一级权限,判断是否登录即可
+                    if (attr.PermissionsID == 1)//第一级权限,判断是否登录即可，进出库操作、提交报修申请。
                     {
-                        //此段是模拟登录，携带token，测试用的。
-                        /*
-                        TokenInfo tokenInfo = new TokenInfo();
-                        tokenInfo.Pwd = "password";
-                        tokenInfo.UserName = "tel";
-                        string token = TokenHelper.GenToken(tokenInfo);
-                        filterContext.HttpContext.Request.Headers.Add("Authorization", token);
-                        */
                         //如果此方法有1号权限则跳转提示页面，这里判断的逻辑等，都看业务的需求！！
                         if (filterContext.HttpContext.Request.Headers["Authorization"] != null)
                         {
@@ -63,6 +62,33 @@ namespace TongManage.Attribute
                                 _response.OutputStream.Write(ss, 0, ss.Length);
                                 _response.ContentType = "text/plain";
                                 _response.End();
+                            }
+                            else
+                            {
+                                string temp = TokenHelper.GetTokenJson(filterContext.HttpContext.Request.Headers["Authorization"]);
+                                TokenInfo token = JSONHelper.JSONToObject<TokenInfo>(temp);
+                                //进行登录验证
+                                User user = userDao.selectUserByUserName(token.UserName);
+                                if(user==null)
+                                {
+                                    var _response = filterContext.HttpContext.Response;
+                                    byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                    _response.OutputStream.Write(ss, 0, ss.Length);
+                                    _response.ContentType = "text/plain";
+                                    _response.End();
+                                }
+                                else
+                                {
+                                    //密码核对
+                                    if (MD5Util.MD5Encrypt(token.Pwd) != user.Password)
+                                    {
+                                        var _response = filterContext.HttpContext.Response;
+                                        byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                        _response.OutputStream.Write(ss, 0, ss.Length);
+                                        _response.ContentType = "text/plain";
+                                        _response.End();
+                                    }
+                                }
                             }
                         }
                         else
@@ -75,18 +101,253 @@ namespace TongManage.Attribute
                             _response.End();
                         }
                     }
-                    else if(attr.PermissionsID==2)//第二级权限
+                    else if(attr.PermissionsID==2)//第二级权限，提交采购入库申请、修改工夹具基础信息、处理报修申请、提交报废申请。
                     {
                         //待补充
-
+                        if (filterContext.HttpContext.Request.Headers["Authorization"] != null)
+                        {
+                            if (!TokenHelper.DecodeToken())
+                            {
+                                var _response = filterContext.HttpContext.Response;
+                                byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                _response.OutputStream.Write(ss, 0, ss.Length);
+                                _response.ContentType = "text/plain";
+                                _response.End();
+                            }
+                            else
+                            {
+                                string temp = TokenHelper.GetTokenJson(filterContext.HttpContext.Request.Headers["Authorization"]);
+                                TokenInfo token = JSONHelper.JSONToObject<TokenInfo>(temp);
+                                //进行登录验证
+                                User user = userDao.selectUserByUserName(token.UserName);
+                                if (user == null)
+                                {
+                                    var _response = filterContext.HttpContext.Response;
+                                    byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                    _response.OutputStream.Write(ss, 0, ss.Length);
+                                    _response.ContentType = "text/plain";
+                                    _response.End();
+                                }
+                                else
+                                {
+                                    //密码核对
+                                    if (MD5Util.MD5Encrypt(token.Pwd) == user.Password)
+                                    {
+                                        //进一步进行权限等级的验证
+                                        if(user.RoleId<2)
+                                        {
+                                            var _response = filterContext.HttpContext.Response;
+                                            byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(506, "无操作权限")));
+                                            _response.OutputStream.Write(ss, 0, ss.Length);
+                                            _response.ContentType = "text/plain";
+                                            _response.End();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var _response = filterContext.HttpContext.Response;
+                                        byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                        _response.OutputStream.Write(ss, 0, ss.Length);
+                                        _response.ContentType = "text/plain";
+                                        _response.End();
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var _response = filterContext.HttpContext.Response;
+                            byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                            _response.OutputStream.Write(ss, 0, ss.Length);
+                            _response.ContentType = "text/plain";
+                            _response.End();
+                        }
                     }
-                    else if(attr.PermissionsID==3)//第三级权限
+                    else if(attr.PermissionsID==3)//第三级权限，创建和修改工夹具类别、处理采购入库申请、处理报废申请。
                     {
                         //待补充
+                        if (filterContext.HttpContext.Request.Headers["Authorization"] != null)
+                        {
+                            if (!TokenHelper.DecodeToken())
+                            {
+                                var _response = filterContext.HttpContext.Response;
+                                byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                _response.OutputStream.Write(ss, 0, ss.Length);
+                                _response.ContentType = "text/plain";
+                                _response.End();
+                            }
+                            else
+                            {
+                                string temp = TokenHelper.GetTokenJson(filterContext.HttpContext.Request.Headers["Authorization"]);
+                                TokenInfo token = JSONHelper.JSONToObject<TokenInfo>(temp);
+                                //进行登录验证
+                                User user = userDao.selectUserByUserName(token.UserName);
+                                if (user == null)
+                                {
+                                    var _response = filterContext.HttpContext.Response;
+                                    byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                    _response.OutputStream.Write(ss, 0, ss.Length);
+                                    _response.ContentType = "text/plain";
+                                    _response.End();
+                                }
+                                else
+                                {
+                                    //密码核对
+                                    if (MD5Util.MD5Encrypt(token.Pwd) == user.Password)
+                                    {
+                                        //进一步进行权限等级的验证
+                                        if (user.RoleId < 3)
+                                        {
+                                            var _response = filterContext.HttpContext.Response;
+                                            byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(506, "无操作权限")));
+                                            _response.OutputStream.Write(ss, 0, ss.Length);
+                                            _response.ContentType = "text/plain";
+                                            _response.End();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var _response = filterContext.HttpContext.Response;
+                                        byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                        _response.OutputStream.Write(ss, 0, ss.Length);
+                                        _response.ContentType = "text/plain";
+                                        _response.End();
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var _response = filterContext.HttpContext.Response;
+                            byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                            _response.OutputStream.Write(ss, 0, ss.Length);
+                            _response.ContentType = "text/plain";
+                            _response.End();
+                        }
                     }
-                    else if(attr.PermissionsID==4)//第四级权限
+                    else if(attr.PermissionsID==4)//第四级权限，对采购入库申请和报废申请进行最终处理。
                     {
                         //待补充
+                        if (filterContext.HttpContext.Request.Headers["Authorization"] != null)
+                        {
+                            if (!TokenHelper.DecodeToken())
+                            {
+                                var _response = filterContext.HttpContext.Response;
+                                byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                _response.OutputStream.Write(ss, 0, ss.Length);
+                                _response.ContentType = "text/plain";
+                                _response.End();
+                            }
+                            else
+                            {
+                                string temp = TokenHelper.GetTokenJson(filterContext.HttpContext.Request.Headers["Authorization"]);
+                                TokenInfo token = JSONHelper.JSONToObject<TokenInfo>(temp);
+                                //进行登录验证
+                                User user = userDao.selectUserByUserName(token.UserName);
+                                if (user == null)
+                                {
+                                    var _response = filterContext.HttpContext.Response;
+                                    byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                    _response.OutputStream.Write(ss, 0, ss.Length);
+                                    _response.ContentType = "text/plain";
+                                    _response.End();
+                                }
+                                else
+                                {
+                                    //密码核对
+                                    if (MD5Util.MD5Encrypt(token.Pwd) == user.Password)
+                                    {
+                                        //进一步进行权限等级的验证
+                                        if (user.RoleId < 4)
+                                        {
+                                            var _response = filterContext.HttpContext.Response;
+                                            byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(506, "无操作权限")));
+                                            _response.OutputStream.Write(ss, 0, ss.Length);
+                                            _response.ContentType = "text/plain";
+                                            _response.End();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var _response = filterContext.HttpContext.Response;
+                                        byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                        _response.OutputStream.Write(ss, 0, ss.Length);
+                                        _response.ContentType = "text/plain";
+                                        _response.End();
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var _response = filterContext.HttpContext.Response;
+                            byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                            _response.OutputStream.Write(ss, 0, ss.Length);
+                            _response.ContentType = "text/plain";
+                            _response.End();
+                        }
+                    }
+                    else if(attr.PermissionsID==5)//第五级权限，添加或删除用户、更改用户权限。
+                    {
+                        //待补充
+                        if (filterContext.HttpContext.Request.Headers["Authorization"] != null)
+                        {
+                            if (!TokenHelper.DecodeToken())
+                            {
+                                var _response = filterContext.HttpContext.Response;
+                                byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                _response.OutputStream.Write(ss, 0, ss.Length);
+                                _response.ContentType = "text/plain";
+                                _response.End();
+                            }
+                            else
+                            {
+                                string temp = TokenHelper.GetTokenJson(filterContext.HttpContext.Request.Headers["Authorization"]);
+                                TokenInfo token = JSONHelper.JSONToObject<TokenInfo>(temp);
+                                //进行登录验证
+                                User user = userDao.selectUserByUserName(token.UserName);
+                                if (user == null)
+                                {
+                                    var _response = filterContext.HttpContext.Response;
+                                    byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                    _response.OutputStream.Write(ss, 0, ss.Length);
+                                    _response.ContentType = "text/plain";
+                                    _response.End();
+                                }
+                                else
+                                {
+                                    //密码核对
+                                    if (MD5Util.MD5Encrypt(token.Pwd) == user.Password)
+                                    {
+                                        //进一步进行权限等级的验证
+                                        if (user.RoleId < 5)
+                                        {
+                                            var _response = filterContext.HttpContext.Response;
+                                            byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(506, "无操作权限")));
+                                            _response.OutputStream.Write(ss, 0, ss.Length);
+                                            _response.ContentType = "text/plain";
+                                            _response.End();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var _response = filterContext.HttpContext.Response;
+                                        byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                                        _response.OutputStream.Write(ss, 0, ss.Length);
+                                        _response.ContentType = "text/plain";
+                                        _response.End();
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var _response = filterContext.HttpContext.Response;
+                            byte[] ss = System.Text.Encoding.UTF8.GetBytes(JSONHelper.ObjectToJSON(ResponseUtil.Fail(501, "请登录")));
+                            _response.OutputStream.Write(ss, 0, ss.Length);
+                            _response.ContentType = "text/plain";
+                            _response.End();
+                        }
                     }
                 }
             }

@@ -35,6 +35,12 @@
       WHERE id = #value# AND is_deleted = 0
     </select>
 
+    <!--查询单条记录通过用户名-->
+    <select id="SelectUserByUserName" parameterClass="string" resultMap="User" >
+      SELECT * from fixture_user
+      WHERE Name = #value# AND is_deleted = 0
+    </select>
+
     <!--插入新记录-->
     <insert id="InsertUser" parameterClass="User">
       INSERT into fixture_user ( Name, User_Photo, Role_Id, Password, Gmt_Create, Gmt_Modified, Is_Deleted)

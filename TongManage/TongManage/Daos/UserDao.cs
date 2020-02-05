@@ -22,6 +22,11 @@ namespace TongManage.Daos
             return BaseDao.SelectById<User>("SelectUserById", id);
         }
 
+        public User selectUserByUserName(string userName)
+        {
+            return BaseDao.SelectByKey<User>("SelectUserByUserName", userName);
+        }
+
         public int insertUser(User user)
         {
             return BaseDao.Insert<User>("InsertUser", user);

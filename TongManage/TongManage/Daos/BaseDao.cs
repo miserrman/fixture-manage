@@ -52,6 +52,16 @@ namespace TongManage.Daos
             return null;
         }
 
+        public static T SelectByKey<T>(string statementName, string key) where T : class
+        {
+            ISqlMapper iSqlMapper = Mapper.Instance();
+            if (iSqlMapper != null)
+            {
+                return iSqlMapper.QueryForObject<T>(statementName, key);
+            }
+            return null;
+        }
+
         public static IList<T> QueryForList<T>(string statementName, object parameterObject = null)
         {
             ISqlMapper iSqlMapper = Mapper.Instance();

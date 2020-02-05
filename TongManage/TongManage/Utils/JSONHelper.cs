@@ -10,6 +10,11 @@ using System.Web.Script.Serialization;
 using System.Data;
 using System.Text.RegularExpressions;
 
+/// <summary>
+/// author: ZhouXing
+/// date: 2020/2/1
+/// </summary>
+
 namespace TongManage.Utils
 {
     /// <summary>

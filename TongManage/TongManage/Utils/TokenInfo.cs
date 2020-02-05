@@ -6,6 +6,12 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Script.Serialization;
 
+
+/// <summary>
+/// author: ZhouXing
+/// date: 2020/2/1
+/// </summary>
+
 namespace TongManage.Utils
 {
     public class TokenInfo
@@ -14,9 +20,11 @@ namespace TongManage.Utils
         {
             UserName = "j";
             Pwd = "123456";
+            workCell = "000";
         }
         public string UserName { get; set; }
         public string Pwd { get; set; }
+        public string workCell { get; set; }
     }
 
     public class TokenHelper
@@ -33,8 +41,9 @@ namespace TongManage.Utils
             var payload = new Dictionary<string, dynamic>
             {
                 {"UserName", M.UserName},//用于存放当前登录人账户信息
-                {"UserPwd", M.Pwd}//用于存放当前登录人登录密码信息
-            };
+                {"UserPwd", M.Pwd},//用于存放当前登录人登录密码信息
+                {"workCell", M.workCell}//用来存放用户的部门
+        };
             IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
             IJsonSerializer serializer = new JsonNetSerializer();
             IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();

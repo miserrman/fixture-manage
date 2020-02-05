@@ -14,6 +14,14 @@ namespace TongManage.Controllers
         [CheckAttribute(1)]
         public string Index()//此方法需要进行token验证
         {
+            //此段是模拟登录，携带token，测试用的。
+            /*
+            TokenInfo tokenInfo = new TokenInfo();
+            tokenInfo.Pwd = "password";
+            tokenInfo.UserName = "tel";
+            string token = TokenHelper.GenToken(tokenInfo);
+            filterContext.HttpContext.Request.Headers.Add("Authorization", token);
+            */
             return "success!";
         }
 

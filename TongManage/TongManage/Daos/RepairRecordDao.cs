@@ -17,6 +17,16 @@ namespace TongManage.Daos
             return BaseDao.QueryForList<RepairRecord>("SelectAllRepairRecords");
         }
 
+        public IList<RepairRecord> selectAllCompleteRecords()
+        {
+            return BaseDao.QueryForList<RepairRecord>("SelectAllCompleteRecords");
+        }
+
+        public IList<RepairRecord> selectAllNotCompleteRecords()
+        {
+            return BaseDao.QueryForList<RepairRecord>("SelectAllNotCompleteRecords");
+        }
+
         public RepairRecord selectRepairRecordById(int id)
         {
             return BaseDao.SelectById<RepairRecord>("SelectRepairRecordById", id);

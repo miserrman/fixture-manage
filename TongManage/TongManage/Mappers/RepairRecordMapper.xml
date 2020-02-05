@@ -29,6 +29,18 @@
       WHERE is_deleted = 0
     </select>
 
+    <!--查询完成维修的记录-->
+    <select id="SelectAllCompleteRecords" resultMap="RepairRecord">
+      SELECT * from fixture_repair_record
+      WHERE is_deleted = 0 AND Repair_Over_On is not null
+    </select>
+
+    <!--查询未完成维修的记录-->
+    <select id="SelectAllNotCompleteRecords" resultMap="RepairRecord">
+      SELECT * from fixture_repair_record
+      WHERE is_deleted = 0 AND Repair_Over_On is null
+    </select>
+    
     <!--查询单条记录-->
     <select id="SelectRepairRecordById" parameterClass="int" resultMap="RepairRecord" >
       SELECT * from fixture_repair_record
