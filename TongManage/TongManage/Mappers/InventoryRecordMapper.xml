@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Ibatis" xmlns="http://ibatis.apache.org/mapping"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!--创建类的别名-->
+  <alias>
+    <typeAlias alias="InventoryRecord" type="TongManage.Models.InventoryRecord, TongManage" />
+  </alias>
+
+  <resultMaps>
+		<!--InventoryRecords类与db表的映射-->
+		<resultMap id="InventoryRecord" class="TongManage.Models.InventoryRecord">
+      <result property="Id" column="Id"/>
+			<result property="LogOn" column="Log_On"/>
+			<result property="LogBy" column="Log_By"/>
+			<result property="HandledBy" column="Handled_By"/>
+			<result property="InOrOut" column="In_Or_Out"/>
+			<result property="ProductionLine" column="Production_Line"/>
+			<result property="TongId" column="Tong_Id"/>
+			<result property="Location" column="Location"/>
+			<result property="GmtCreate" column="Gmt_Create" />
+			<result property="GmtModified" column="Gmt_Modified"  />
+			<result property="IsDeleted" column="Is_Deleted" />
+		</resultMap>
+	</resultMaps>
+
+  <statements>
+
+		<!--查询所有记录-->
+		<select id="SelectAllInventoryRecords" resultMap="InventoryRecord">
+      SELECT * from fixture_inventory_records
+      WHERE is_deleted = 0
+    </select>
+
+    <!--查询单条记录-->
+    <select id="SelectInventoryRecordById" parameterClass="int" resultMap="InventoryRecord" >
+      SELECT * from fixture_inventory_records
+      WHERE id = #value# AND is_deleted = 0
+    </select>
+
+    <!--插入新记录-->
+    <insert id="InsertInventoryRecord" parameterClass="InventoryRecord">
+      INSERT into fixture_inventory_records ( log_on, log_by, handled_by, in_or_out,
+      production_line, tong_Id, location, gmt_create, gmt_modified, is_deleted)
+      values ( #LogOn#, #LogBy#, #HandledBy#, #InOrOut#, #ProductionLine#,
+      #TongId#, #Location#, #GmtCreate#, #GmtModified#, #IsDeleted#)
+      <selectKey resultClass="int" type="post" property="id" >
+        select LAST_INSERT_ID() as value
+      </selectKey>
+    </insert>
+
+    <!--更新单条记录-->
+    <update id="UpdateInventoryRecord" parameterClass="InventoryRecord">
+      UPDATE fixture_inventory_records SET
+      Log_On = #LogOn#,
+      Log_By = #LogBy#,
+      Handled_By = #HandledBy#,
+      In_Or_Out = #InOrOut#,
+      Production_Line = #ProductionLine#,
+      Tong_Id = #TongId#,
+      Location = #Location#,
+      Gmt_Create = #GmtCreate#,
+      Gmt_Modified = #GmtModified#
+      WHERE id = #Id# AND is_deleted = 0
+    </update>
+
+    <!--根据主键删除单条记录-->
+    <update id="DeleteInventoryRecordById" parameterClass="int">
+      UPDATE fixture_inventory_records
+      SET Is_Deleted = 1
+      WHERE id = #value#
+    </update>
+
+	</statements>
+
+</sqlMap>
+

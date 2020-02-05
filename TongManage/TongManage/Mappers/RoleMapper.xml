@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Ibatis" xmlns="http://ibatis.apache.org/mapping"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!--创建类的别名-->
+  <alias>
+    <typeAlias alias="Role" type="TongManage.Models.Role, TongManage" />
+  </alias>
+
+  <resultMaps>
+    <!--Role类与db表的映射-->
+    <resultMap id="Role" class="Role">
+      <result property="Id" column="Id"/>
+      <result property="Name" column="Name"/>
+      <result property="GmtCreate" column="Gmt_Create" />
+      <result property="GmtModified" column="Gmt_Modified"  />
+      <result property="IsDeleted" column="Is_Deleted" />
+    </resultMap>
+  </resultMaps>
+
+  <statements>
+
+    <!--查询所有记录-->
+    <select id="SelectAllRoles" resultMap="Role">
+      SELECT * from fixture_role
+      WHERE is_deleted = 0
+    </select>
+
+    <!--查询单条记录-->
+    <select id="SelectRoleById" parameterClass="int" resultMap="Role" >
+      SELECT * from fixture_role
+      WHERE id = #value# AND is_deleted = 0
+    </select>
+
+    <!--插入新记录-->
+    <insert id="InsertRole" parameterClass="Role">
+      INSERT into fixture_role ( Name, Gmt_Create, Gmt_Modified, Is_Deleted)
+      values ( #Name#, #GmtCreate#, #GmtModified#, #IsDeleted#)
+      <selectKey resultClass="int" type="post" property="id" >
+        select LAST_INSERT_ID() as value
+      </selectKey>
+    </insert>
+
+    <!--更新单条记录-->
+    <update id="UpdateRole" parameterClass="Role">
+      UPDATE fixture_role SET
+      Name = #Name#,
+      Gmt_Create = #GmtCreate#,
+      Gmt_Modified = #GmtModified#,
+      WHERE id = #Id# AND is_deleted = 0
+    </update>
+
+    <!--根据主键删除单条记录-->
+    <update id="DeleteRoleById" parameterClass="int">
+      UPDATE fixture_role
+      SET Is_Deleted = 1
+      WHERE id = #value#
+    </update>
+
+  </statements>
+
+</sqlMap>
+

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Ibatis" xmlns="http://ibatis.apache.org/mapping"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!--创建类的别名-->
+  <alias>
+    <typeAlias alias="Workcell" type="TongManage.Models.Workcell, TongManage" />
+  </alias>
+
+  <resultMaps>
+    <!--Workcell类与db表的映射-->
+    <resultMap id="Workcell" class="Workcell">
+      <result property="Id" column="Id"/>
+      <result property="Name" column="Name"/>
+      <result property="GmtCreate" column="Gmt_create" />
+      <result property="GmtModified" column="Gmt_modified"  />
+      <result property="IsDeleted" column="Is_deleted" />
+    </resultMap>
+  </resultMaps>
+
+  <statements>
+
+    <!--查询所有记录-->
+    <select id="SelectAllWorkcells" resultMap="Workcell">
+      select * from fixture_workcell
+      WHERE is_deleted = 0
+    </select>
+
+    <!--查询单条记录-->
+    <select id="SelectWorkcellById" parameterClass="int" resultMap="Workcell" >
+      SELECT * from fixture_workcell
+      WHERE id = #value# AND is_deleted = 0
+    </select>
+
+    <!--插入新记录-->
+    <insert id="InsertWorkcell" parameterClass="Workcell">
+      INSERT into fixture_workcell ( Name, Gmt_Create, Gmt_Modified, Is_Deleted)
+      values ( #Name#, #GmtCreate#, #GmtModified#, #IsDeleted#)
+      <selectKey resultClass="int" type="post" property="id" >
+        select LAST_INSERT_ID() as value
+      </selectKey>
+    </insert>
+
+    <!--更新单条记录-->
+    <update id="UpdateWorkcell" parameterClass="Workcell">
+      UPDATE fixture_workcell SET
+      Name = #Name#,
+      Gmt_Create = #GmtCreate#,
+      Gmt_Modified = #GmtModified#,
+      WHERE id = #Id# AND is_deleted = 0
+    </update>
+
+    <!--根据主键删除单条记录-->
+    <update id="DeleteWorkcellById" parameterClass="int">
+      UPDATE fixture_workcell
+      SET Is_Deleted = 1
+      WHERE id = #value#
+    </update>
+
+
+  </statements>
+
+</sqlMap>
+

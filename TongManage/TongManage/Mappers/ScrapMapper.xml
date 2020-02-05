@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Ibatis" xmlns="http://ibatis.apache.org/mapping"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!--创建类的别名-->
+  <alias>
+    <typeAlias alias="Scrap" type="TongManage.Models.Scrap, TongManage" />
+  </alias>
+
+  <resultMaps>
+    <!--Scrap类与db表的映射-->
+    <resultMap id="Scrap" class="Scrap">
+      <result property="Id" column="Id"/>
+      <result property="OperatorId" column="Operator_Id"/>
+      <result property="LogOn" column="Log_On"/>
+      <result property="TongId" column="Tong_Id"/>
+      <result property="Description" column="Description"/>
+      <result property="GmtCreate" column="Gmt_Create" />
+      <result property="GmtModified" column="Gmt_Modified"  />
+      <result property="IsDeleted" column="Is_Deleted" />
+    </resultMap>
+  </resultMaps>
+
+  <statements>
+
+    <!--查询所有记录-->
+    <select id="SelectAllScraps" resultMap="Scrap">
+      SELECT * from fixture_scrap
+      WHERE is_deleted = 0
+    </select>
+
+    <!--查询单条记录-->
+    <select id="SelectScrapById" parameterClass="int" resultMap="Scrap" >
+      SELECT * from fixture_scrap
+      WHERE id = #value# AND is_deleted = 0
+    </select>
+
+    <!--插入新记录-->
+    <insert id="InsertScrap" parameterClass="Scrap">
+      INSERT into fixture_scrap ( Operator_Id, Log_On, Tong_Id, Description, Gmt_Create, Gmt_Modified, Is_Deleted)
+      values ( #OperatorId#, #LogOn#, #TongId#, #Description#, #GmtCreate#, #GmtModified#, #IsDeleted#)
+      <selectKey resultClass="int" type="post" property="id" >
+        select LAST_INSERT_ID() as value
+      </selectKey>
+    </insert>
+
+    <!--更新单条记录-->
+    <update id="UpdateScrap" parameterClass="Scrap">
+      UPDATE fixture_scrap SET
+      Operator_Id = #OperatorId#,
+      Log_On = #LogOn#,
+      Tong_Id = #TongId#,
+      Description = #Description#,
+      Gmt_Create = #GmtCreate#,
+      Gmt_Modified = #GmtModified#,
+      WHERE id = #Id# AND is_deleted = 0
+    </update>
+
+    <!--根据主键删除单条记录-->
+    <update id="DeleteScrapById" parameterClass="int">
+      UPDATE fixture_scrap
+      SET Is_Deleted = 1
+      WHERE id = #value#
+    </update>
+
+  </statements>
+
+</sqlMap>
+

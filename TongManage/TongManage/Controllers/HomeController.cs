@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TongManage.Attribute;
+using TongManage.Daos;
 using TongManage.Utils;
 
 namespace TongManage.Controllers

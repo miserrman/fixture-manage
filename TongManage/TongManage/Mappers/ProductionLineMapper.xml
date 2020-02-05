@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Ibatis" xmlns="http://ibatis.apache.org/mapping"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!--创建类的别名-->
+  <alias>
+    <typeAlias alias="ProductionLine" type="TongManage.Models.ProductionLine, TongManage" />
+  </alias>
+
+  <resultMaps>
+    <!--ProductionLine类与db表的映射-->
+    <resultMap id="ProductionLine" class="ProductionLine">
+      <result property="Id" column="Id"/>
+      <result property="Name" column="Name"/>
+      <result property="GmtCreate" column="Gmt_Create" />
+      <result property="GmtModified" column="Gmt_Modified"  />
+      <result property="IsDeleted" column="Is_Deleted" />
+    </resultMap>
+  </resultMaps>
+
+  <statements>
+
+    <!--查询所有记录-->
+    <select id="SelectAllProductionLines" resultMap="ProductionLine">
+      SELECT * from fixture_production_line
+      WHERE is_deleted = 0
+    </select>
+
+    <!--查询单条记录-->
+    <select id="SelectProductionLineById" parameterClass="int" resultMap="ProductionLine" >
+      SELECT * from fixture_production_line
+      WHERE id = #value# AND is_deleted = 0
+    </select>
+
+    <!--插入新记录-->
+    <insert id="InsertProductionLine" parameterClass="ProductionLine">
+      INSERT into fixture_production_line ( Name, Gmt_Create, Gmt_Modified, Is_Deleted)
+      values ( #Name#, #GmtCreate#, #GmtModified#, #IsDeleted#)
+      <selectKey resultClass="int" type="post" property="id" >
+        select LAST_INSERT_ID() as value
+      </selectKey>
+    </insert>
+
+    <!--更新单条记录-->
+    <update id="UpdateProductionLine" parameterClass="ProductionLine">
+      UPDATE fixture_production_line SET
+      Name = #Name#,
+      Gmt_Create = #GmtCreate#,
+      Gmt_Modified = #GmtModified#,
+      WHERE id = #Id# AND is_deleted = 0
+    </update>
+
+    <!--根据主键删除单条记录-->
+    <update id="DeleteProductionLineById" parameterClass="int">
+      UPDATE fixture_production_line
+      SET Is_Deleted = 1
+      WHERE id = #value#
+    </update>
+
+  </statements>
+
+</sqlMap>
+

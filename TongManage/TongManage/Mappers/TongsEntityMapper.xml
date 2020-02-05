@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Ibatis" xmlns="http://ibatis.apache.org/mapping"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!--创建类的别名-->
+  <alias>
+    <typeAlias alias="TongsEntity" type="TongManage.Models.TongsEntity, TongManage" />
+  </alias>
+
+  <resultMaps>
+    <!--TongsEntity类与db表的映射-->
+    <resultMap id="TongsEntity" class="TongsEntity">
+      <result property="Id" column="Id"/>
+      <result property="Code" column="Code"/>
+      <result property="SeqId" column="Seq_Id"/>
+      <result property="BillNo" column="Bill_No"/>
+      <result property="RegDate" column="Reg_Date"/>
+      <result property="UserdCount" column="Userd_Count"/>
+      <result property="Location" column="Location"/>
+      <result property="PicUrl" column="Pic_Url"/>
+      <result property="ProductionDate" column="Production_Date"/>
+      <result property="DocumentDate" column="Document_Date"/>
+      <result property="OperatorId" column="Operator_Id"/>
+      <result property="IsScrapped" column="Is_Scrapped"/>
+      <result property="Status" column="Status"/>
+      <result property="RepairCounts" column="Repair_Counts"/>
+      <result property="LastRepairOn" column="Last_Repair_On"/>
+      <result property="ExpextedLife" column="Expexted_Life"/>
+      <result property="GmtCreate" column="Gmt_Create" />
+      <result property="GmtModified" column="Gmt_Modified"  />
+      <result property="IsDeleted" column="Is_Deleted" />
+    </resultMap>
+  </resultMaps>
+
+  <statements>
+
+    <!--查询所有记录-->
+    <select id="SelectAllTongsEntitys" resultMap="TongsEntity">
+      SELECT * from fixture_tongs_entity
+      WHERE is_deleted = 0
+    </select>
+
+    <!--查询单条记录-->
+    <select id="SelectTongsEntityById" parameterClass="int" resultMap="TongsEntity" >
+      SELECT * from fixture_tongs_entity
+      WHERE id = #value# AND is_deleted = 0
+    </select>
+
+    <!--插入新记录-->
+    <insert id="InsertTongsEntity" parameterClass="TongsEntity">
+      INSERT into fixture_tongs_entity ( Code, Seq_Id, Bill_No, Reg_Date, Userd_Count, Location, Pic_Url, Production_Date,
+      Document_Date, Operator_Id, Is_Scrapped, Status, Repair_Counts, Last_Repair_On, Expexted_Life, Gmt_Create, Gmt_Modified, Is_Deleted)
+      values ( #Code#, #SeqId#, #BillNo#, #RegDate#, #UserdCount#, #Location#, #PicUrl#, #ProductionDate#, #DocumentDate#, 
+      #OperatorId#, #IsScrapped#, #Status#, #RepairCounts#, #LastRepairOn#, #ExpextedLife#, #GmtCreate#, #GmtModified#, #IsDeleted#)
+      <selectKey resultClass="int" type="post" property="id" >
+        select LAST_INSERT_ID() as value
+      </selectKey>
+    </insert>
+
+    <!--更新单条记录-->
+    <update id="UpdateTongsEntity" parameterClass="TongsEntity">
+      UPDATE fixture_tongs_entity SET
+      Code = #Code#,
+      Seq_Id = #SeqId#,
+      Bill_No = #BillNo#,
+      Reg_Date = #RegDate#,
+      Userd_Count = #UserdCount#,
+      Location = #Location#,
+      Pic_Url = #PicUrl#,
+      Production_Date = #ProductionDate#,
+      Document_Date = #DocumentDate#,
+      Operator_Id = #OperatorId#,
+      Is_Scrapped = #IsScrapped#,
+      Status = #Status#,
+      Repair_Counts = #RepairCounts#,
+      Last_Repair_On = #LastRepairOn#,
+      Expexted_Life = #ExpextedLife#,
+      Gmt_Create = #GmtCreate#,
+      Gmt_Modified = #GmtModified#,
+      WHERE id = #Id# AND is_deleted = 0
+    </update>
+
+    <!--根据主键删除单条记录-->
+    <update id="DeleteTongsEntityById" parameterClass="int">
+      UPDATE fixture_tongs_entity
+      SET Is_Deleted = 1
+      WHERE id = #value#
+    </update>
+
+  </statements>
+
+</sqlMap>
+

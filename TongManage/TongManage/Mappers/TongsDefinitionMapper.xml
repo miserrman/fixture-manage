@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Ibatis" xmlns="http://ibatis.apache.org/mapping"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!--创建类的别名-->
+  <alias>
+    <typeAlias alias="TongsDefinition" type="TongManage.Models.TongsDefinition, TongManage" />
+  </alias>
+
+  <resultMaps>
+    <!--TongsDefinition类与db表的映射-->
+    <resultMap id="TongsDefinition" class="TongsDefinition">
+      <result property="Id" column="Id"/>
+      <result property="WorkcellId" column="Workcell_Id"/>
+      <result property="FamilyId" column="Family_Id"/>
+      <result property="Code" column="Code"/>
+      <result property="Name" column="Name"/>
+      <result property="Model" column="Model"/>
+      <result property="PartNo" column="Part_No"/>
+      <result property="UserdFor" column="Userd_For"/>
+      <result property="Upl" column="Upl"/>
+      <result property="OwnerId" column="Owner_Id"/>
+      <result property="Remark" column="Remark"/>
+      <result property="PmPeriod" column="Pm_Period"/>
+      <result property="RecOn" column="Rec_On"/>
+      <result property="RecBy" column="Rec_By"/>
+      <result property="EditOn" column="Edit_On"/>
+      <result property="EditBy" column="Edit_By"/>
+      <result property="GmtCreate" column="Gmt_Create" />
+      <result property="GmtModified" column="Gmt_Modified"  />
+      <result property="IsDeleted" column="Is_Deleted" />
+    </resultMap>
+  </resultMaps>
+
+  <statements>
+
+    <!--查询所有记录-->
+    <select id="SelectAllTongsDefinitions" resultMap="TongsDefinition">
+      SELECT * from fixture_tongs_definition
+      WHERE is_deleted = 0
+    </select>
+
+    <!--查询单条记录-->
+    <select id="SelectTongsDefinitionById" parameterClass="int" resultMap="TongsDefinition" >
+      SELECT * from fixture_tongs_definition
+      WHERE id = #value# AND is_deleted = 0
+    </select>
+
+    <!--插入新记录-->
+    <insert id="InsertTongsDefinition" parameterClass="TongsDefinition">
+      INSERT into fixture_tongs_definition ( Workcell_Id, Family_Id, Code, Name, Model, Part_No,
+      Userd_For, Upl, Owner_Id, Remark, Pm_Period, Rec_On, Rec_By, Edit_On, Edit_By, Gmt_Create, Gmt_Modified, Is_Deleted)
+      values ( #WorkcellId#, #FamilyId#, #Code#, #Name#, #Model#, #PartNo#, #UserdFor#, #Upl#, #OwnerId#,
+      #Remark#, #PmPeriod#, #RecOn#, #RecBy#, #EditOn#, #EditBy#, #GmtCreate#, #GmtModified#, #IsDeleted#)
+      <selectKey resultClass="int" type="post" property="id" >
+        select LAST_INSERT_ID() as value
+      </selectKey>
+    </insert>
+
+    <!--更新单条记录-->
+    <update id="UpdateTongsDefinition" parameterClass="TongsDefinition">
+      UPDATE fixture_tongs_definition SET
+      Workcell_Id = #WorkcellId#,
+      Family_Id = #FamilyId#,
+      Code = #Code#,
+      Name = #Name#,
+      Model = #Model#,
+      Part_No = #PartNo#,
+      Userd_For = #UserdFor#,
+      Upl = #Upl#,
+      Owner_Id = #OwnerId#,
+      Remark = #Remark#,
+      Pm_Period = #PmPeriod#,
+      Rec_On = #RecOn#,
+      Rec_By = #RecBy#,
+      Edit_On = #EditOn#,
+      Edit_By = #EditBy#,
+      Gmt_Create = #GmtCreate#,
+      Gmt_Modified = #GmtModified#,
+      WHERE id = #Id# AND is_deleted = 0
+    </update>
+
+    <!--根据主键删除单条记录-->
+    <update id="DeleteTongsDefinitionById" parameterClass="int">
+      UPDATE fixture_tongs_definition
+      SET Is_Deleted = 1
+      WHERE id = #value#
+    </update>
+
+  </statements>
+
+</sqlMap>
+
