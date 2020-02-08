@@ -36,7 +36,7 @@ namespace TongManage.Controllers
         {
             InventoryRecord inventoryRecord = JSONHelper.JSONToObject<InventoryRecord>(body);
             inventoryRecord.InOrOut = false;
-            stockService.CreateFixtureRecord(inventoryRecord);
+            stockService.createFixtureRecord(inventoryRecord);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(inventoryRecord));
         }
 
@@ -50,7 +50,7 @@ namespace TongManage.Controllers
         {
             InventoryRecord inventoryRecord = JSONHelper.JSONToObject<InventoryRecord>(body);
             inventoryRecord.InOrOut = true;
-            stockService.CreateFixtureRecord(inventoryRecord);
+            stockService.createFixtureRecord(inventoryRecord);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(inventoryRecord));
         }
 
@@ -62,7 +62,7 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetRecordDetailById(int id)
         {
-            InventoryRecord inventoryRecord = stockService.GetRecordDetailById(id);
+            InventoryRecord inventoryRecord = stockService.getRecordDetailById(id);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(inventoryRecord));
         }
 
@@ -71,10 +71,10 @@ namespace TongManage.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public string GetRecordInOutChart(int id)
+        public string GetRecordInOutChart()
         {
-            //TODO: 获取报表是什么意思？？
-            return null;
+            List<InventoryRecord> InventoryRecordList = stockService.getInventoryRecordList();
+            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(InventoryRecordList));
         }
 
         /// <summary>
@@ -83,9 +83,9 @@ namespace TongManage.Controllers
         /// <param name="id">id</param>
         /// <returns></returns>
         [HttpGet]
-        public string GetRecordById(int id)
+        public string SearchRecordInOut(string workcellName, string handleBy, string code)
         {
-            //TODO: 与上面的通过ID查找对应的记录详情有什么不同？？
+            //TODO: 对于数据字典有疑问！
             return null;
         }
 
@@ -97,9 +97,11 @@ namespace TongManage.Controllers
         [HttpDelete]
         public string DeleteRecordById(int id)
         {
-            //TODO: 删除的时候需要将被删除的对象返回吗？？
-            stockService.DeleteRecordById(id);
-            return JSONHelper.ObjectToJSON(ResponseUtil.Ok());
+            int status = stockService.deleteRecordById(id);
+            if (1 == status)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok());
+            else
+                return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
 
     }
