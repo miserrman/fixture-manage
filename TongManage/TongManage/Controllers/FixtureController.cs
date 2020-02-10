@@ -8,6 +8,8 @@ using System.Net.Http;
 using TongManage.Models;
 using Newtonsoft.Json;
 using System.Data.SqlClient;
+using TongManage.Services;
+using TongManage.Utils;
 
 namespace TongManage.Controllers
 {
@@ -23,6 +25,8 @@ namespace TongManage.Controllers
         }
         */
 
+        private static FixtureService fixtureService = new FixtureService();
+
         /// <summary>
         /// 创建工具夹类别
         /// </summary>
@@ -31,7 +35,9 @@ namespace TongManage.Controllers
         [HttpPost]
         public string CreateDef(string body)
         {
-            return null;
+            TongsDefinition tongsDefinition = JSONHelper.JSONToObject<TongsDefinition>(body);
+            tongsDefinition = fixtureService.createTongsDefinition(tongsDefinition);
+            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(tongsDefinition));
         }
 
         /// <summary>
@@ -43,7 +49,16 @@ namespace TongManage.Controllers
         [HttpPut]
         public string UpdateDef(int id, string body)
         {
-            return null;
+            TongsDefinition tongsDefinition = JSONHelper.JSONToObject<TongsDefinition>(body);
+            tongsDefinition = fixtureService.updateTongsDefinition(id, tongsDefinition);
+            if (null == tongsDefinition)
+            {
+                return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
+            }
+            else
+            {
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(tongsDefinition));
+            }
         }
 
         /// <summary>
@@ -54,7 +69,8 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetDefById(int id)
         {
-            return null;
+            TongsDefinition tongsDefinition = fixtureService.getTongsDefinitionById(id);
+            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(tongsDefinition));
         }
 
         /// <summary>
@@ -64,8 +80,10 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetDefChart()
         {
-            return null;
+            List<TongsDefinition> tongsDefinitionList = fixtureService.getAllTongsDefinitions();
+            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(tongsDefinitionList));
         }
       
+        //TODO: 删除方法？？
     }
 }

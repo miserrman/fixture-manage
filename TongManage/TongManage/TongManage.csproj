@@ -198,6 +198,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Workcell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\FixtureService.cs" />
     <Compile Include="Services\RepairService.cs" />
     <Compile Include="Services\StockService.cs" />
     <Compile Include="Services\UserService.cs" />
