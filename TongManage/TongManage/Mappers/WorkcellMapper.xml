@@ -21,13 +21,13 @@
   <statements>
 
     <!--查询所有记录-->
-    <select id="SelectAllWorkcells" resultMap="Workcell">
+    <select id="SelectAllWorkcells" parameterClass="Workcell" resultMap="Workcell">
       select * from fixture_workcell
       WHERE is_deleted = 0
     </select>
 
     <!--查询单条记录-->
-    <select id="SelectWorkcellById" parameterClass="int" resultMap="Workcell" >
+    <select id="SelectWorkcellById" parameterClass="Workcell" resultMap="Workcell" >
       SELECT * from fixture_workcell
       WHERE id = #value# AND is_deleted = 0
     </select>
@@ -51,10 +51,10 @@
     </update>
 
     <!--根据主键删除单条记录-->
-    <update id="DeleteWorkcellById" parameterClass="int">
+    <update id="DeleteWorkcellById" parameterClass="Workcell">
       UPDATE fixture_workcell
       SET Is_Deleted = 1
-      WHERE id = #value#
+      WHERE id = #id#
     </update>
 
 

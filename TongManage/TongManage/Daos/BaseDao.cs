@@ -1,5 +1,6 @@
 ﻿using IBatisNet.DataMapper;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,11 +8,19 @@ using System.Web;
 namespace TongManage.Daos
 {
     /// <summary>
+    /// Dao 层基类
     /// author: linlianhui
     /// date: 2020/2/3
     /// </summary>
     public class BaseDao
     {
+        /// <summary>
+        /// 插入方法
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="statementName">sql语句</param>
+        /// <param name="t"></param>
+        /// <returns>操作状态码</returns>
         public static int Insert<T>(string statementName, T t)
         {
             ISqlMapper iSqlMapper = Mapper.Instance();
@@ -22,6 +31,13 @@ namespace TongManage.Daos
             return 0;
         }
 
+        /// <summary>
+        /// 更新方法
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="statementName">sql语句</param>
+        /// <param name="t"></param>
+        /// <returns>操作状态码</returns>
         public static int Update<T>(string statementName, T t)
         {
             ISqlMapper iSqlMapper = Mapper.Instance();
@@ -32,42 +48,53 @@ namespace TongManage.Daos
             return 0;
         }
 
-        public static int Delete(string statementName, int id)
+        /// <summary>
+        /// 删除方法
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="statementName">sql语句</param>
+        /// <param name="t"></param>
+        /// <returns>操作状态码</returns>
+        public static int Delete<T>(string statementName, T t)
         {
             ISqlMapper iSqlMapper = Mapper.Instance();
             if (iSqlMapper != null)
             {
-                return iSqlMapper.Update(statementName, id);
+                return iSqlMapper.Update(statementName, t);
             }
             return 0;
         }
 
-        public static T SelectById<T>(string statementName, int id) where T : class
+        /// <summary>
+        /// 查询对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="statementName">sql语句</param>
+        /// <param name="t"></param>
+        /// <returns>查询结果</returns>
+        public static T QueryForObject<T>(string statementName, T t) where T : class
         {
             ISqlMapper iSqlMapper = Mapper.Instance();
             if (iSqlMapper != null)
             {
-                return iSqlMapper.QueryForObject<T>(statementName, id);
+                return iSqlMapper.QueryForObject<T>(statementName, t);
             }
             return null;
         }
 
-        public static T SelectByKey<T>(string statementName, string key) where T : class
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="statementName">sql语句</param>
+        /// <param name="t"></param>
+        /// <returns>查询结果</returns>
+        public static IList<T> QueryForList<T>(string statementName, T t)
         {
             ISqlMapper iSqlMapper = Mapper.Instance();
             if (iSqlMapper != null)
             {
-                return iSqlMapper.QueryForObject<T>(statementName, key);
-            }
-            return null;
-        }
-
-        public static IList<T> QueryForList<T>(string statementName, object parameterObject = null)
-        {
-            ISqlMapper iSqlMapper = Mapper.Instance();
-            if (iSqlMapper != null)
-            {
-                return iSqlMapper.QueryForList<T>(statementName, parameterObject);
+                return iSqlMapper.QueryForList<T>(statementName, t);
             }
             return null;
         }

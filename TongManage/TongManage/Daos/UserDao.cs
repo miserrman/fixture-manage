@@ -12,34 +12,84 @@ namespace TongManage.Daos
     /// </summary>
     public class UserDao
     {
-        public IList<User> selectAllUsers()
+        /// <summary>
+        /// 查询所有用户
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>用户列表</returns>
+        public IList<User> selectAllUsers(User user)
         {
-            return BaseDao.QueryForList<User>("SelectAllUsers");
+            return BaseDao.QueryForList<User>("SelectAllUsers", user);
         }
 
-        public User selectUserById(int id)
+        /// <summary>
+        /// 查询处于同一部门的所有用户
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>用户列表</returns>
+        public IList<User> selectUsersByWorkcell(User user)
         {
-            return BaseDao.SelectById<User>("SelectUserById", id);
+            return BaseDao.QueryForList<User>("SelectAllUsers", user);
         }
 
-        public User selectUserByUserName(string userName)
+        /// <summary>
+        /// 查询单条用户信息
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>单个用户信息</returns>
+        public User selectUserById(User user)
         {
-            return BaseDao.SelectByKey<User>("SelectUserByUserName", userName);
+            return BaseDao.QueryForObject<User>("SelectUser", user);
         }
 
+        /// <summary>
+        /// 通过用户名查询用户
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>单个用户信息</returns>
+        public User selectUserByUserName(User user)
+        {
+            return BaseDao.QueryForObject<User>("SelectUser", user);
+        }
+
+        /// <summary>
+        /// 通过工号查询用户
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>单个用户信息</returns>
+        public User selectUserByWorkNo(User user)
+        {
+            return BaseDao.QueryForObject<User>("SelectUser", user);
+        }
+
+        /// <summary>
+        /// 插入单个用户信息
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>操作状态码</returns>
         public int insertUser(User user)
         {
             return BaseDao.Insert<User>("InsertUser", user);
         }
 
+        /// <summary>
+        /// 更新单个用户信息
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>操作状态码</returns>
         public int updateUser(User user)
         {
             return BaseDao.Update<User>("UpdateUser", user);
         }
 
-        public int deleteUserById(int id)
+        /// <summary>
+        /// 删除单条用户信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>操作状态码</returns>
+        public int deleteUserById(User user)
         {
-            return BaseDao.Delete("DeleteUserById", id);
+            return BaseDao.Delete<User>("DeleteUserById", user);
         }
     }
 }

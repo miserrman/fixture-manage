@@ -21,15 +21,15 @@
   <statements>
 
     <!--查询所有记录-->
-    <select id="SelectAllRoles" resultMap="Role">
+    <select id="SelectAllRoles" parameterClass="Role" resultMap="Role">
       SELECT * from fixture_role
       WHERE is_deleted = 0
     </select>
 
     <!--查询单条记录-->
-    <select id="SelectRoleById" parameterClass="int" resultMap="Role" >
+    <select id="SelectRoleById" parameterClass="Role" resultMap="Role" >
       SELECT * from fixture_role
-      WHERE id = #value# AND is_deleted = 0
+      WHERE id = #id# AND is_deleted = 0
     </select>
 
     <!--插入新记录-->
@@ -51,10 +51,10 @@
     </update>
 
     <!--根据主键删除单条记录-->
-    <update id="DeleteRoleById" parameterClass="int">
+    <update id="DeleteRoleById" parameterClass="Role">
       UPDATE fixture_role
       SET Is_Deleted = 1
-      WHERE id = #value#
+      WHERE id = #id#
     </update>
 
   </statements>
