@@ -62,7 +62,13 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetRecordDetailById(int id)
         {
-            InventoryRecord inventoryRecord = stockService.getRecordDetailById(id);
+            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int WorkcellId = tokenInfo.workCell;
+            InventoryRecord record = new InventoryRecord();
+            record.WorkcellId = WorkcellId;
+            record.Id = id;
+            InventoryRecord inventoryRecord = stockService.getRecordDetailById(record);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(inventoryRecord));
         }
 
@@ -73,7 +79,12 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetRecordInOutChart()
         {
-            List<InventoryRecord> InventoryRecordList = stockService.getInventoryRecordList();
+            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int WorkcellId = tokenInfo.workCell;
+            InventoryRecord record = new InventoryRecord();
+            record.WorkcellId = WorkcellId;
+            List<InventoryRecord> InventoryRecordList = stockService.getInventoryRecordList(record);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(InventoryRecordList));
         }
 
@@ -97,7 +108,9 @@ namespace TongManage.Controllers
         [HttpDelete]
         public string DeleteRecordById(int id)
         {
-            int status = stockService.deleteRecordById(id);
+            InventoryRecord record = new InventoryRecord();
+            record.Id = id;
+            int status = stockService.deleteRecordById(record);
             if (1 == status)
                 return JSONHelper.ObjectToJSON(ResponseUtil.Ok());
             else

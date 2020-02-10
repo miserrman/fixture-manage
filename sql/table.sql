@@ -42,6 +42,7 @@ create table fixture_tongs_entity (
     repair_counts bigint not null,
     last_repair_on datetime default null,
     expexted_life bigint not null,
+    workcell_id bigint not null,
     gmt_create datetime not null,
     gmt_modified datetime not null,
     is_deleted tinyint default '0'
@@ -89,6 +90,7 @@ drop table if exists fixture_production_line;
 create table fixture_production_line (
     id bigint primary key auto_increment,
     name varchar(31) not null,
+    workcell_id bigint not null,
     gmt_create datetime not null,
     gmt_modified datetime not null,
     is_deleted tinyint unsigned default '0'
@@ -102,6 +104,7 @@ create table fixture_repair_record (
     tong_id bigint not null,
     description varchar(255) default null,
     repair_over_on datetime default null,
+    workcell_id bigint not null,
     gmt_create datetime default null,
     gmt_modified datetime default null,
     is_deleted tinyint unsigned default '0'
@@ -118,6 +121,7 @@ create table fixture_inventory_records (
     production_line bigint not null,
     tong_id bigint not null,
     location varchar(31) not null,
+    workcell_id bigint not null,
     gmt_create datetime default null,
     gmt_modified datetime default null,
     is_deleted tinyint unsigned default '0'
@@ -131,6 +135,7 @@ create table fixture_purchase(
     operator_id bigint not null,
     log_on datetime not null,
     tong_id bigint not null,
+    workcell_id bigint not null,
     gmt_create datetime default null,
     gmt_modified datetime default null,
     is_deleted tinyint unsigned default '0'
@@ -144,6 +149,7 @@ create table fixture_scrap (
     log_on datetime default null,
     tong_id bigint not null,
     description varchar(255) default null,
+    workcell_id bigint not null,
     gmt_create datetime default null,
     gmt_modified datetime default null,
     is_deleted tinyint unsigned default '0'

@@ -13,6 +13,7 @@ namespace TongManage.Models
         private DateTime logOn;
         private int tongId;
         private string description;
+        private int workcellId;
         private DateTime gmtCreate;
         private DateTime gmtModified;
         private bool isDeleted;
@@ -25,5 +26,6 @@ namespace TongManage.Models
         public DateTime GmtCreate { get => gmtCreate; set => gmtCreate = value; }
         public DateTime GmtModified { get => gmtModified; set => gmtModified = value; }
         public bool IsDeleted { get => isDeleted; set => isDeleted = value; }
+        public int WorkcellId { get => workcellId; set => workcellId = value; }
     }
 }

@@ -34,8 +34,7 @@ namespace TongManage.Controllers
         [HttpPost]
         public string CreateRecord(string body)
         {
-            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
-            //待补充
+
             RepairRecord repairRecord = JSONHelper.JSONToObject<RepairRecord>(body);
             RepairRecord result = repairService.CreateRecord(repairRecord);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
@@ -51,7 +50,8 @@ namespace TongManage.Controllers
         {
             string token=HttpContext.Request.Headers["Authorization"];
             RepairRecord repairRecord = JSONHelper.JSONToObject<RepairRecord>(body);
-            RepairRecord result = repairService.UpdateRecord(id,repairRecord);
+            repairRecord.Id = id;
+            RepairRecord result = repairService.UpdateRecord(repairRecord);
             if(result!=null)
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
             else
@@ -65,7 +65,12 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetCompleteRecord()
         {
-            List<RepairRecord> result = repairService.GetCompleteRecord();
+            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int WorkcellId = tokenInfo.workCell;
+            RepairRecord repairRecord = new RepairRecord();
+            repairRecord.WorkcellId = WorkcellId;
+            List<RepairRecord> result = repairService.GetCompleteRecord(repairRecord);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
         }
 
@@ -76,7 +81,12 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetNotCompleteRecord()
         {
-            List<RepairRecord> result = repairService.GetNotCompleteRecord();
+            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int WorkcellId = tokenInfo.workCell;
+            RepairRecord repairRecord = new RepairRecord();
+            repairRecord.WorkcellId = WorkcellId;
+            List<RepairRecord> result = repairService.GetNotCompleteRecord(repairRecord);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
         }
 
@@ -88,7 +98,13 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetRecord(int id)
         {
-            RepairRecord result = repairService.GetRecord(id);
+            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int WorkcellId = tokenInfo.workCell;
+            RepairRecord repairRecord = new RepairRecord();
+            repairRecord.Id = id;
+            repairRecord.WorkcellId = WorkcellId;
+            RepairRecord result = repairService.GetRecord(repairRecord);
             if (result != null)
             {
                 return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
@@ -104,7 +120,12 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetRepairChart()
         {
-            List<RepairRecord> result = repairService.GetRepairChart();
+            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int WorkcellId = tokenInfo.workCell;
+            RepairRecord repairRecord = new RepairRecord();
+            repairRecord.WorkcellId = WorkcellId;
+            List<RepairRecord> result = repairService.GetRepairChart(repairRecord);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
         }
 
@@ -116,8 +137,10 @@ namespace TongManage.Controllers
         [HttpDelete]
         public string DeleteRecordById(int id)
         {
-            int result = repairService.DeleteRecordById(id);
-            if(id==1)
+            RepairRecord repairRecord = new RepairRecord();
+            repairRecord.Id = id;
+            int result = repairService.DeleteRecordById(repairRecord);
+            if(result==1)
                 return JSONHelper.ObjectToJSON(ResponseUtil.Ok());
             else
                 return JSONHelper.ObjectToJSON(ResponseUtil.Fail());

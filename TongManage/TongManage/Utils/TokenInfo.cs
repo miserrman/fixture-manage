@@ -20,11 +20,11 @@ namespace TongManage.Utils
         {
             UserName = "j";
             Pwd = "123456";
-            workCell = "000";
+            workCell =000;
         }
         public string UserName { get; set; }
         public string Pwd { get; set; }
-        public string workCell { get; set; }
+        public int workCell { get; set; }
     }
 
     public class TokenHelper
