@@ -37,10 +37,9 @@ namespace TongManage.Services
         /// <param name="id"></param>
         /// <param name="tongsDefinition">工夹具类别类</param>
         /// <returns>刚更新的工夹具类别或空（更新失败）</returns>
-        public TongsDefinition updateTongsDefinition(int id, TongsDefinition tongsDefinition)
+        public TongsDefinition updateTongsDefinition(TongsDefinition tongsDefinition)
         {
-            TongsDefinition temp = tongsDefinitionDao.selectTongsDefinitionById(id);
-            tongsDefinition.Id = id;
+            TongsDefinition temp = tongsDefinitionDao.selectTongsDefinitionById(tongsDefinition);
             tongsDefinition.GmtCreate = temp.GmtCreate;
             tongsDefinition.GmtModified = DateTime.Now.ToLocalTime();
             int status = tongsDefinitionDao.updateTongsDefinition(tongsDefinition);
@@ -60,9 +59,9 @@ namespace TongManage.Services
         /// 
         /// <param name="id"></param>
         /// <returns>查找到的工夹具类别</returns>
-        public TongsDefinition getTongsDefinitionById(int id)
+        public TongsDefinition getTongsDefinitionById(TongsDefinition definition)
         {
-            return tongsDefinitionDao.selectTongsDefinitionById(id);
+            return tongsDefinitionDao.selectTongsDefinitionById(definition);
         }
 
         /// <summary>
@@ -70,9 +69,9 @@ namespace TongManage.Services
         /// </summary>
         /// 
         /// <returns>工夹具类别列表</returns>
-        public List<TongsDefinition> getAllTongsDefinitions()
+        public List<TongsDefinition> getAllTongsDefinitions(TongsDefinition definition)
         {
-            return tongsDefinitionDao.selectAllTongsDefinitions().ToList<TongsDefinition>();
+            return tongsDefinitionDao.selectAllTongsDefinitions(definition).ToList<TongsDefinition>();
         }
     }
 }

@@ -36,12 +36,12 @@ namespace TongManage.Services
         /// 
         /// <param name="id"></param>
         /// <returns>操作状态码</returns>
-        public int deleteRecordById(int id)
+        public int deleteRecordById(InventoryRecord record)
         {
-            int status = inventoryRecordDao.deleteInventoryRecordById(id);
+            int status = inventoryRecordDao.deleteInventoryRecordById(record);
             if (1 == status)
             {
-                InventoryRecord inventoryRecord = inventoryRecordDao.selectInventoryRecordById(id);
+                InventoryRecord inventoryRecord = inventoryRecordDao.selectInventoryRecordById(record);
                 inventoryRecord.GmtModified = DateTime.Now.ToLocalTime();
                 inventoryRecordDao.updateInventoryRecord(inventoryRecord);
             }
@@ -54,9 +54,9 @@ namespace TongManage.Services
         /// 
         /// <param name="id"></param>
         /// <returns>单条进出库记录</returns>
-        public InventoryRecord getRecordDetailById(int id)
+        public InventoryRecord getRecordDetailById(InventoryRecord record)
         {
-            return inventoryRecordDao.selectInventoryRecordById(id);
+            return inventoryRecordDao.selectInventoryRecordById(record);
         }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace TongManage.Services
         /// </summary>
         /// 
         /// <returns>工夹具出入库列表</returns>
-        public List<InventoryRecord> getInventoryRecordList()
+        public List<InventoryRecord> getInventoryRecordList(InventoryRecord record)
         {
-            return inventoryRecordDao.selectAllInventoryRecords().ToList<InventoryRecord>();
+            return inventoryRecordDao.selectAllInventoryRecords(record).ToList<InventoryRecord>();
         }
     }
 }

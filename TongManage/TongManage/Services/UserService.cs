@@ -31,17 +31,16 @@ namespace TongManage.Services
         /// <param name="userName">用户名</param>
         /// <param name="passW">密码</param>
         /// <returns></returns>
-        public string login(string userName, string passW)
+        public string login(User userp)
         {
-            User user = userDao.selectUserByUserName(userName);
-            if (user.Password == MD5Util.MD5Encrypt(passW))
+            User user = userDao.selectUserByUserName(userp);
+            if (user.Password == MD5Util.MD5Encrypt(userp.Password))
             {
                 //生成token
                 TokenInfo userInfo = new TokenInfo();
-                userInfo.UserName = userName;
-                userInfo.Pwd = passW;
-                //userInfo.workCell = user.WorkCell;
-                //数据库表缺少workCell字段
+                userInfo.UserName = userp.Name;
+                userInfo.Pwd = userp.Password;
+                userInfo.workCell = user.WorkcellId;
                 return TokenHelper.GenToken(userInfo);
             }
             else
@@ -56,19 +55,19 @@ namespace TongManage.Services
         /// </summary>
         /// <param name="userName">用户名</param>
         /// <returns></returns>
-        public int delUser(string userName)
+        public int delUser(User userp)
         {
-            User user = userDao.selectUserByUserName(userName);
+            User user = userDao.selectUserByUserName(userp);
             if(user==null)
             {
                 return 0;
             }
             else
             {
-                int temp = userDao.deleteUserById(user.Id);
+                int temp = userDao.deleteUserById(user);
                 if(temp==1)
                 {
-                    User user1 = userDao.selectUserById(user.Id);
+                    User user1 = userDao.selectUserById(user);
                     user1.GmtModified= DateTime.Now.ToLocalTime();
                     userDao.updateUser(user1);
                     return 1;
@@ -86,10 +85,9 @@ namespace TongManage.Services
         /// <param name="int">用户id</param>
         /// <param name="user">用户类</param>
         /// <returns></returns>
-        public User setUserInfo(int id,User user)
+        public User setUserInfo(User user)
         {
-            User user1 = userDao.selectUserById(id);
-            user.Id = id;
+            User user1 = userDao.selectUserById(user);
             user.GmtModified= DateTime.Now.ToLocalTime();
             user.GmtCreate = user1.GmtCreate;
             int result = userDao.updateUser(user);
@@ -115,9 +113,9 @@ namespace TongManage.Services
         /// 获得用户列表信息
         /// </summary>
         /// <returns></returns>
-        public List<User> getUserList()
+        public List<User> getUserList(User user)
         {
-            return userDao.selectAllUsers().ToList();
+            return userDao.selectAllUsers(user).ToList();
         }
 
         /// <summary>
@@ -125,9 +123,9 @@ namespace TongManage.Services
         /// </summary>
         /// <param name="id">用户id</param>
         /// <returns></returns>
-        public User getUserById(int id)
+        public User getUserById(User user)
         {
-            return userDao.selectUserById(id);
+            return userDao.selectUserById(user);
         }
 
         /// <summary>
@@ -135,9 +133,9 @@ namespace TongManage.Services
         /// </summary>
         /// <param name="userName">用户名</param>
         /// <returns></returns>
-        public User getUserByName(string userName)
+        public User getUserByName(User user)
         {
-            return userDao.selectUserByUserName(userName);
+            return userDao.selectUserByUserName(user);
         }
 
         /// <summary>
@@ -145,11 +143,9 @@ namespace TongManage.Services
         /// </summary>
         /// <param name="workNo">工号</param>
         /// <returns></returns>
-        public User getUserByWorkNo(string workNo)
+        public User getUserByWorkNo(User user)
         {
-            //数据库的表需要进行更改才能完成此功能
-            //添加workNo字段
-            return null;
+            return userDao.selectUserByWorkNo(user);
         }
 
         /// <summary>
@@ -157,10 +153,9 @@ namespace TongManage.Services
         /// </summary>
         /// <param name="workCell">部门id</param>
         /// <returns></returns>
-        public List<User> getUserListByWorkCell(string workCell)
+        public List<User> getUserListByWorkCell(User user)
         {
-            //缺字段
-            return null;
+            return userDao.selectUsersByWorkCell(user);
         }
     }
 }

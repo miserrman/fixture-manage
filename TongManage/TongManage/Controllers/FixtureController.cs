@@ -50,7 +50,8 @@ namespace TongManage.Controllers
         public string UpdateDef(int id, string body)
         {
             TongsDefinition tongsDefinition = JSONHelper.JSONToObject<TongsDefinition>(body);
-            tongsDefinition = fixtureService.updateTongsDefinition(id, tongsDefinition);
+            tongsDefinition.Id = id;
+            tongsDefinition = fixtureService.updateTongsDefinition(tongsDefinition);
             if (null == tongsDefinition)
             {
                 return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
@@ -69,7 +70,13 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetDefById(int id)
         {
-            TongsDefinition tongsDefinition = fixtureService.getTongsDefinitionById(id);
+            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int WorkcellId = tokenInfo.workCell;
+            TongsDefinition definition = new TongsDefinition();
+            definition.WorkcellId = WorkcellId;
+            definition.Id = id;
+            TongsDefinition tongsDefinition = fixtureService.getTongsDefinitionById(definition);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(tongsDefinition));
         }
 
@@ -80,7 +87,12 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetDefChart()
         {
-            List<TongsDefinition> tongsDefinitionList = fixtureService.getAllTongsDefinitions();
+            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int WorkcellId = tokenInfo.workCell;
+            TongsDefinition definition = new TongsDefinition();
+            definition.WorkcellId = WorkcellId;
+            List<TongsDefinition> tongsDefinitionList = fixtureService.getAllTongsDefinitions(definition);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(tongsDefinitionList));
         }
       

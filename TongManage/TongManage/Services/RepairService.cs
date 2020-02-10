@@ -33,12 +33,11 @@ namespace TongManage.Services
         /// <param name="id">id</param>
         /// <param name="record">id</param>
         /// <returns>RepairRecord</returns>
-        public RepairRecord UpdateRecord(int id,RepairRecord record)
+        public RepairRecord UpdateRecord(RepairRecord record)
         {
-            RepairRecord repairRecord = repairRecordDao.selectRepairRecordById(id);
+            RepairRecord repairRecord = repairRecordDao.selectRepairRecordById(record);
             record.GmtCreate = repairRecord.GmtCreate;
             record.GmtModified= DateTime.Now.ToLocalTime();
-            record.Id = id;
             int result=repairRecordDao.updateRepairRecord(record);
             if (result == 0)
                 return null;
@@ -50,18 +49,18 @@ namespace TongManage.Services
         /// 得到所有维修完成的记录
         /// </summary>
         /// <returns></returns>
-        public List<RepairRecord> GetCompleteRecord()
+        public List<RepairRecord> GetCompleteRecord(RepairRecord record)
         {
-            return repairRecordDao.selectAllCompleteRecords().ToList();
+            return repairRecordDao.selectAllCompleteRecords(record).ToList();
         }
 
         /// <summary>
         /// 得到所有维修未完成的记录
         /// </summary>
         /// <returns></returns>
-        public List<RepairRecord> GetNotCompleteRecord()
+        public List<RepairRecord> GetNotCompleteRecord(RepairRecord record)
         {
-            return repairRecordDao.selectAllNotCompleteRecords().ToList();
+            return repairRecordDao.selectAllNotCompleteRecords(record).ToList();
         }
 
         /// <summary>
@@ -69,18 +68,18 @@ namespace TongManage.Services
         /// </summary>
         /// <param name="id">id</param>
         /// <returns></returns>
-        public RepairRecord GetRecord(int id)
+        public RepairRecord GetRecord(RepairRecord record)
         {
-            return repairRecordDao.selectRepairRecordById(id);
+            return repairRecordDao.selectRepairRecordById(record);
         }
 
         /// <summary>
         /// 获取工夹具维修报表
         /// </summary>
         /// <returns></returns>
-        public List<RepairRecord> GetRepairChart()
+        public List<RepairRecord> GetRepairChart(RepairRecord record)
         {
-            return repairRecordDao.selectAllRepairRecords().ToList();
+            return repairRecordDao.selectAllRepairRecords(record).ToList();
         }
 
         /// <summary>
@@ -88,12 +87,12 @@ namespace TongManage.Services
         /// </summary>
         /// <param name="id">id</param>
         /// <returns></returns>
-        public int DeleteRecordById(int id)
+        public int DeleteRecordById(RepairRecord record)
         {
-            int temp= repairRecordDao.deleteRepairRecordById(id);
+            int temp= repairRecordDao.deleteRepairRecordById(record);
             if(temp==1)
             {
-                RepairRecord repairRecord = repairRecordDao.selectRepairRecordById(id);
+                RepairRecord repairRecord = repairRecordDao.selectRepairRecordById(record);
                 repairRecord.GmtModified= DateTime.Now.ToLocalTime();
                 repairRecordDao.updateRepairRecord(repairRecord);
                 return 1;
