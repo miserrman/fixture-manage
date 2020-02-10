@@ -40,7 +40,7 @@ namespace TongManage.Services
                 TokenInfo userInfo = new TokenInfo();
                 userInfo.UserName = userp.Name;
                 userInfo.Pwd = userp.Password;
-                userInfo.workCell = userp.WorkcellId;
+                userInfo.workCell = user.WorkcellId;
                 return TokenHelper.GenToken(userInfo);
             }
             else

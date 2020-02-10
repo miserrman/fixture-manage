@@ -18,9 +18,9 @@ namespace TongManage.Utils
     {
         public TokenInfo()
         {
-            UserName = "j";
-            Pwd = "123456";
-            workCell =000;
+            UserName = null;
+            Pwd = null;
+            workCell =-1;
         }
         public string UserName { get; set; }
         public string Pwd { get; set; }
