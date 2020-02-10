@@ -65,6 +65,9 @@ create table fixture_user (
     user_photo varchar(255) default null,
     role_id tinyint default '0',
     password varchar(255) not null,
+    workcell_id bigint default null,
+    email varchar(255) not null,
+    work_no varchar(31) not null,
     gmt_create datetime default null,
     gmt_modified datetime default null,
     is_deleted tinyint default '0'
