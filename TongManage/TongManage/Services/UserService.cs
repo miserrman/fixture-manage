@@ -155,7 +155,7 @@ namespace TongManage.Services
         /// <returns></returns>
         public List<User> getUserListByWorkCell(User user)
         {
-            return userDao.selectUsersByWorkCell(user);
+            return userDao.selectUsersByWorkcell(user).ToList<User>();
         }
     }
 }
