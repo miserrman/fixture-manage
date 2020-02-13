@@ -105,7 +105,6 @@ namespace TongManage.Attribute
                     }
                     else if(attr.PermissionsID==2)//第二级权限，提交采购入库申请、修改工夹具基础信息、处理报修申请、提交报废申请。
                     {
-                        //待补充
                         if (filterContext.HttpContext.Request.Headers["Authorization"] != null)
                         {
                             if (!TokenHelper.DecodeToken())
@@ -121,7 +120,9 @@ namespace TongManage.Attribute
                                 string temp = TokenHelper.GetTokenJson(filterContext.HttpContext.Request.Headers["Authorization"]);
                                 TokenInfo token = JSONHelper.JSONToObject<TokenInfo>(temp);
                                 //进行登录验证
-                                User user = userDao.selectUserByUserName(token.UserName);
+                                User par = new User();
+                                par.Name = token.UserName;
+                                User user = userDao.selectUserByUserName(par);
                                 if (user == null)
                                 {
                                     var _response = filterContext.HttpContext.Response;
@@ -167,7 +168,6 @@ namespace TongManage.Attribute
                     }
                     else if(attr.PermissionsID==3)//第三级权限，创建和修改工夹具类别、处理采购入库申请、处理报废申请。
                     {
-                        //待补充
                         if (filterContext.HttpContext.Request.Headers["Authorization"] != null)
                         {
                             if (!TokenHelper.DecodeToken())
@@ -183,7 +183,9 @@ namespace TongManage.Attribute
                                 string temp = TokenHelper.GetTokenJson(filterContext.HttpContext.Request.Headers["Authorization"]);
                                 TokenInfo token = JSONHelper.JSONToObject<TokenInfo>(temp);
                                 //进行登录验证
-                                User user = userDao.selectUserByUserName(token.UserName);
+                                User par = new User();
+                                par.Name = token.UserName;
+                                User user = userDao.selectUserByUserName(par);
                                 if (user == null)
                                 {
                                     var _response = filterContext.HttpContext.Response;
@@ -229,7 +231,6 @@ namespace TongManage.Attribute
                     }
                     else if(attr.PermissionsID==4)//第四级权限，对采购入库申请和报废申请进行最终处理。
                     {
-                        //待补充
                         if (filterContext.HttpContext.Request.Headers["Authorization"] != null)
                         {
                             if (!TokenHelper.DecodeToken())
@@ -245,7 +246,9 @@ namespace TongManage.Attribute
                                 string temp = TokenHelper.GetTokenJson(filterContext.HttpContext.Request.Headers["Authorization"]);
                                 TokenInfo token = JSONHelper.JSONToObject<TokenInfo>(temp);
                                 //进行登录验证
-                                User user = userDao.selectUserByUserName(token.UserName);
+                                User par = new User();
+                                par.Name = token.UserName;
+                                User user = userDao.selectUserByUserName(par);
                                 if (user == null)
                                 {
                                     var _response = filterContext.HttpContext.Response;
@@ -291,7 +294,6 @@ namespace TongManage.Attribute
                     }
                     else if(attr.PermissionsID==5)//第五级权限，添加或删除用户、更改用户权限。
                     {
-                        //待补充
                         if (filterContext.HttpContext.Request.Headers["Authorization"] != null)
                         {
                             if (!TokenHelper.DecodeToken())
@@ -307,7 +309,9 @@ namespace TongManage.Attribute
                                 string temp = TokenHelper.GetTokenJson(filterContext.HttpContext.Request.Headers["Authorization"]);
                                 TokenInfo token = JSONHelper.JSONToObject<TokenInfo>(temp);
                                 //进行登录验证
-                                User user = userDao.selectUserByUserName(token.UserName);
+                                User par = new User();
+                                par.Name = token.UserName;
+                                User user = userDao.selectUserByUserName(par);
                                 if (user == null)
                                 {
                                     var _response = filterContext.HttpContext.Response;
