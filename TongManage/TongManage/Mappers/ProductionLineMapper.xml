@@ -12,6 +12,7 @@
     <resultMap id="ProductionLine" class="ProductionLine">
       <result property="Id" column="Id"/>
       <result property="Name" column="Name"/>
+      <result property="WorkcellId" column="Workcell_id"/>
       <result property="GmtCreate" column="Gmt_Create" />
       <result property="GmtModified" column="Gmt_Modified"  />
       <result property="IsDeleted" column="Is_Deleted" />
@@ -21,21 +22,27 @@
   <statements>
 
     <!--查询所有记录-->
-    <select id="SelectAllProductionLines" resultMap="ProductionLine">
+    <select id="SelectAllProductionLines" parameterClass="ProductionLine" resultMap="ProductionLine">
       SELECT * from fixture_production_line
       WHERE is_deleted = 0
+      <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
+        workcell_id = #WorkCellId#
+      </isNotEqual>
     </select>
 
     <!--查询单条记录-->
-    <select id="SelectProductionLineById" parameterClass="int" resultMap="ProductionLine" >
+    <select id="SelectProductionLineById" parameterClass="ProductionLine" resultMap="ProductionLine" >
       SELECT * from fixture_production_line
-      WHERE id = #value# AND is_deleted = 0
+      WHERE id = #id# AND is_delete = 0
+      <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
+        workcell_id = #WorkCellId#
+      </isNotEqual>
     </select>
 
     <!--插入新记录-->
     <insert id="InsertProductionLine" parameterClass="ProductionLine">
-      INSERT into fixture_production_line ( Name, Gmt_Create, Gmt_Modified, Is_Deleted)
-      values ( #Name#, #GmtCreate#, #GmtModified#, #IsDeleted#)
+      INSERT into fixture_production_line ( Name, Workcell_Id, Gmt_Create, Gmt_Modified, Is_Deleted)
+      values ( #Name#, #GmtCreate#, #WorkcellId#, #GmtModified#, #IsDeleted#)
       <selectKey resultClass="int" type="post" property="id" >
         select LAST_INSERT_ID() as value
       </selectKey>
@@ -45,16 +52,17 @@
     <update id="UpdateProductionLine" parameterClass="ProductionLine">
       UPDATE fixture_production_line SET
       Name = #Name#,
+      Workcell_Id = #WorkcellId#,
       Gmt_Create = #GmtCreate#,
       Gmt_Modified = #GmtModified#,
       WHERE id = #Id# AND is_deleted = 0
     </update>
 
     <!--根据主键删除单条记录-->
-    <update id="DeleteProductionLineById" parameterClass="int">
+    <update id="DeleteProductionLineById" parameterClass="ProductionLine">
       UPDATE fixture_production_line
       SET Is_Deleted = 1
-      WHERE id = #value#
+      WHERE id = #id#
     </update>
 
   </statements>

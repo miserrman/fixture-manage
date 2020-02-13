@@ -12,29 +12,54 @@ namespace TongManage.Daos
     /// </summary>
     public class ProductionLineDao
     {
-        public IList<ProductionLine> selectAllProductionLines()
+        /// <summary>
+        /// 查看所有生产线信息
+        /// </summary>
+        /// <param name="productionLine"></param>
+        /// <returns>生产线信息列表</returns>
+        public IList<ProductionLine> selectAllProductionLines(ProductionLine productionLine)
         {
-            return BaseDao.QueryForList<ProductionLine>("SelectAllProductionLines");
+            return BaseDao.QueryForList<ProductionLine>("SelectAllProductionLines", productionLine);
         }
 
-        public ProductionLine selectProductionLineById(int id)
+        /// <summary>
+        /// 查询单条生产线信息
+        /// </summary>
+        /// <param name="productionLine"></param>
+        /// <returns>单条生产线信息记录</returns>
+        public ProductionLine selectProductionLineById(ProductionLine productionLine)
         {
-            return BaseDao.SelectById<ProductionLine>("SelectProductionLineById", id);
+            return BaseDao.QueryForObject<ProductionLine>("SelectProductionLineById", productionLine);
         }
 
+        /// <summary>
+        /// 插入单条生产线信息
+        /// </summary>
+        /// <param name="productionLine">生产线类</param>
+        /// <returns>操作状态码</returns>
         public int insertProductionLine(ProductionLine productionLine)
         {
             return BaseDao.Insert<ProductionLine>("InsertProductionLine", productionLine);
         }
 
+        /// <summary>
+        /// 更新单条生产线信息
+        /// </summary>
+        /// <param name="productionLine">生产线类</param>
+        /// <returns>操作状态码</returns>
         public int updateProductionLine(ProductionLine productionLine)
         {
             return BaseDao.Update<ProductionLine>("UpdateProductionLine", productionLine);
         }
 
-        public int deleteProductionLineById(int id)
+        /// <summary>
+        /// 删除单条生产线信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>操作状态码</returns>
+        public int deleteProductionLineById(ProductionLine productionLine)
         {
-            return BaseDao.Delete("DeleteProductionLineById", id);
+            return BaseDao.Delete<ProductionLine>("DeleteProductionLineById", productionLine);
         }
     }
 }

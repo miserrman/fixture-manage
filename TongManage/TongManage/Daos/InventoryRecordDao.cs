@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,9 +18,9 @@ namespace TongManage.Daos
         /// </summary>
         /// 
         /// <returns>库存记录列表</returns>
-        public IList<InventoryRecord> selectAllInventoryRecords()
+        public IList<InventoryRecord> selectAllInventoryRecords(InventoryRecord inventoryRecord)
         {
-            return BaseDao.QueryForList<InventoryRecord>("SelectAllInventoryRecords");
+            return BaseDao.QueryForList<InventoryRecord>("SelectAllInventoryRecords", inventoryRecord);
         }
 
         /// <summary>
@@ -28,9 +29,9 @@ namespace TongManage.Daos
         /// 
         /// <param name="id"></param>
         /// <returns>库存记录</returns>
-        public InventoryRecord selectInventoryRecordById(int id)
+        public InventoryRecord selectInventoryRecordById(InventoryRecord inventoryRecord)
         {
-            return BaseDao.SelectById<InventoryRecord>("SelectInventoryRecordById", id);
+            return BaseDao.QueryForObject<InventoryRecord>("SelectInventoryRecordById", inventoryRecord);
         }
 
         /// <summary>
@@ -61,9 +62,9 @@ namespace TongManage.Daos
         /// 
         /// <param name="id"></param>
         /// <returns>操作状态码</returns>
-        public int deleteInventoryRecordById(int id)
+        public int deleteInventoryRecordById(InventoryRecord inventoryRecord)
         {
-            return BaseDao.Delete("DeleteInventoryRecordById", id);
+            return BaseDao.Delete<InventoryRecord>("DeleteInventoryRecordById", inventoryRecord);
         }
     }
 }

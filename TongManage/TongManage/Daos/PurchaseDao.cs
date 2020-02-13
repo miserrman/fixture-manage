@@ -12,29 +12,54 @@ namespace TongManage.Daos
     /// </summary>
     public class PurchaseDao
     {
-        public IList<Purchase> selectAllPurchases()
+        /// <summary>
+        /// 查询所有采购信息
+        /// </summary>
+        /// <param name="purchase"></param>
+        /// <returns>采购记录列表</returns>
+        public IList<Purchase> selectAllPurchases(Purchase purchase)
         {
-            return BaseDao.QueryForList<Purchase>("SelectAllPurchases");
+            return BaseDao.QueryForList<Purchase>("SelectAllPurchases", purchase);
         }
 
-        public Purchase selectPurchaseById(int id)
+        /// <summary>
+        /// 查询单条采购信息
+        /// </summary>
+        /// <param name="purchase"></param>
+        /// <returns>采购记录</returns>
+        public Purchase selectPurchaseById(Purchase purchase)
         {
-            return BaseDao.SelectById<Purchase>("SelectPurchaseById", id);
+            return BaseDao.QueryForObject<Purchase>("SelectPurchaseById", purchase);
         }
 
+        /// <summary>
+        /// 插入单条采购记录
+        /// </summary>
+        /// <param name="purchase"></param>
+        /// <returns>操作状态码</returns>
         public int insertPurchase(Purchase purchase)
         {
             return BaseDao.Insert<Purchase>("InsertPurchase", purchase);
         }
 
+        /// <summary>
+        /// 更新采购信息
+        /// </summary>
+        /// <param name="purchase"></param>
+        /// <returns>操作状态码</returns>
         public int updatePurchase(Purchase purchase)
         {
             return BaseDao.Update<Purchase>("UpdatePurchase", purchase);
         }
 
-        public int deletePurchaseById(int id)
+        /// <summary>
+        /// 删除单条采购信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>操作状态码</returns>
+        public int deletePurchaseById(Purchase purchase)
         {
-            return BaseDao.Delete("DeletePurchaseById", id);
+            return BaseDao.Delete<Purchase>("DeletePurchaseById", purchase);
         }
     }
 }

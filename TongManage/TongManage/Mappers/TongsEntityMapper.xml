@@ -26,6 +26,7 @@
       <result property="RepairCounts" column="Repair_Counts"/>
       <result property="LastRepairOn" column="Last_Repair_On"/>
       <result property="ExpextedLife" column="Expexted_Life"/>
+      <result property="WorkcellId" column="Workcell_Id"/>
       <result property="GmtCreate" column="Gmt_Create" />
       <result property="GmtModified" column="Gmt_Modified"  />
       <result property="IsDeleted" column="Is_Deleted" />
@@ -35,23 +36,29 @@
   <statements>
 
     <!--查询所有记录-->
-    <select id="SelectAllTongsEntitys" resultMap="TongsEntity">
+    <select id="SelectAllTongsEntitys" parameterClass="TongsEntity" resultMap="TongsEntity">
       SELECT * from fixture_tongs_entity
       WHERE is_deleted = 0
+      <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
+        workcell_id = #WorkCellId#
+      </isNotEqual>
     </select>
 
     <!--查询单条记录-->
-    <select id="SelectTongsEntityById" parameterClass="int" resultMap="TongsEntity" >
+    <select id="SelectTongsEntityById" parameterClass="TongsEntity" resultMap="TongsEntity" >
       SELECT * from fixture_tongs_entity
-      WHERE id = #value# AND is_deleted = 0
+      WHERE id = #id# AND is_deleted = 0
+      <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
+        workcell_id = #WorkCellId#
+      </isNotEqual>
     </select>
 
     <!--插入新记录-->
     <insert id="InsertTongsEntity" parameterClass="TongsEntity">
       INSERT into fixture_tongs_entity ( Code, Seq_Id, Bill_No, Reg_Date, Userd_Count, Location, Pic_Url, Production_Date,
-      Document_Date, Operator_Id, Is_Scrapped, Status, Repair_Counts, Last_Repair_On, Expexted_Life, Gmt_Create, Gmt_Modified, Is_Deleted)
+      Document_Date, Operator_Id, Is_Scrapped, Status, Repair_Counts, Last_Repair_On, Expexted_Life, Workcell_Id, Gmt_Create, Gmt_Modified, Is_Deleted)
       values ( #Code#, #SeqId#, #BillNo#, #RegDate#, #UserdCount#, #Location#, #PicUrl#, #ProductionDate#, #DocumentDate#, 
-      #OperatorId#, #IsScrapped#, #Status#, #RepairCounts#, #LastRepairOn#, #ExpextedLife#, #GmtCreate#, #GmtModified#, #IsDeleted#)
+      #OperatorId#, #IsScrapped#, #Status#, #RepairCounts#, #LastRepairOn#, #ExpextedLife#, #WorkcellId#, #GmtCreate#, #GmtModified#, #IsDeleted#)
       <selectKey resultClass="int" type="post" property="id" >
         select LAST_INSERT_ID() as value
       </selectKey>
@@ -75,16 +82,17 @@
       Repair_Counts = #RepairCounts#,
       Last_Repair_On = #LastRepairOn#,
       Expexted_Life = #ExpextedLife#,
+      Workcell_Id = #WorkcellId#,
       Gmt_Create = #GmtCreate#,
       Gmt_Modified = #GmtModified#,
       WHERE id = #Id# AND is_deleted = 0
     </update>
 
     <!--根据主键删除单条记录-->
-    <update id="DeleteTongsEntityById" parameterClass="int">
+    <update id="DeleteTongsEntityById" parameterClass="TongsEntity">
       UPDATE fixture_tongs_entity
       SET Is_Deleted = 1
-      WHERE id = #value#
+      WHERE id = #id#
     </update>
 
   </statements>

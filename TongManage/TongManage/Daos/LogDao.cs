@@ -12,29 +12,54 @@ namespace TongManage.Daos
     /// </summary>
     public class LogDao
     {
-        public IList<Log> selectAllLogs()
+        /// <summary>
+        /// 查看所有日志
+        /// </summary>
+        /// <param name="log"></param>
+        /// <returns></returns>
+        public IList<Log> selectAllLogs(Log log)
         {
-            return BaseDao.QueryForList<Log>("SelectAllLogs");
+            return BaseDao.QueryForList<Log>("SelectAllLogs", log);
         }
 
-        public Log selectLogById(int id)
+        /// <summary>
+        /// 查询单条日志记录
+        /// </summary>
+        /// <param name="log"></param>
+        /// <returns>日志记录</returns>
+        public Log selectLogById(Log log)
         {
-            return BaseDao.SelectById<Log>("SelectLogById", id);
+            return BaseDao.QueryForObject<Log>("SelectLogById", log);
         }
 
+        /// <summary>
+        /// 插入一条日志
+        /// </summary>
+        /// <param name="log"></param>
+        /// <returns>操作状态码</returns>
         public int insertLog(Log log)
         {
             return BaseDao.Insert<Log>("InsertLog", log);
         }
 
+        /// <summary>
+        /// 更新日志信息
+        /// </summary>
+        /// <param name="log"></param>
+        /// <returns>操作状态码</returns>
         public int updateLog(Log log)
         {
             return BaseDao.Update<Log>("UpdateInventoryRecord", log);
         }
 
-        public int deleteLogById(int id)
+        /// <summary>
+        /// 删除单条日志记录
+        /// </summary>
+        /// <param name="log"></param>
+        /// <returns>操作状态码</returns>
+        public int deleteLogById(Log log)
         {
-            return BaseDao.Delete("DeleteLogById", id);
+            return BaseDao.Delete<Log>("DeleteLogById", log);
         }
     }
 }

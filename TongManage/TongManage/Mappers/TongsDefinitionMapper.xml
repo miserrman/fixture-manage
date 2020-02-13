@@ -26,6 +26,7 @@
       <result property="RecBy" column="Rec_By"/>
       <result property="EditOn" column="Edit_On"/>
       <result property="EditBy" column="Edit_By"/>
+      <result property="WorkcellId" column="Workcell_Id"/>
       <result property="GmtCreate" column="Gmt_Create" />
       <result property="GmtModified" column="Gmt_Modified"  />
       <result property="IsDeleted" column="Is_Deleted" />
@@ -35,23 +36,29 @@
   <statements>
 
     <!--查询所有记录-->
-    <select id="SelectAllTongsDefinitions" resultMap="TongsDefinition">
+    <select id="SelectAllTongsDefinitions" parameterClass="TongsDefinition" resultMap="TongsDefinition">
       SELECT * from fixture_tongs_definition
       WHERE is_deleted = 0
+      <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
+        workcell_id = #WorkCellId#
+      </isNotEqual>
     </select>
 
     <!--查询单条记录-->
-    <select id="SelectTongsDefinitionById" parameterClass="int" resultMap="TongsDefinition" >
+    <select id="SelectTongsDefinitionById" parameterClass="TongsDefinition" resultMap="TongsDefinition" >
       SELECT * from fixture_tongs_definition
-      WHERE id = #value# AND is_deleted = 0
+      WHERE id = #id# AND is_deleted = 0
+      <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
+        workcell_id = #WorkCellId#
+      </isNotEqual>
     </select>
 
     <!--插入新记录-->
     <insert id="InsertTongsDefinition" parameterClass="TongsDefinition">
       INSERT into fixture_tongs_definition ( Workcell_Id, Family_Id, Code, Name, Model, Part_No,
-      Userd_For, Upl, Owner_Id, Remark, Pm_Period, Rec_On, Rec_By, Edit_On, Edit_By, Gmt_Create, Gmt_Modified, Is_Deleted)
+      Userd_For, Upl, Owner_Id, Remark, Pm_Period, Rec_On, Rec_By, Edit_On, Edit_By, Workcell_Id, Gmt_Create, Gmt_Modified, Is_Deleted)
       values ( #WorkcellId#, #FamilyId#, #Code#, #Name#, #Model#, #PartNo#, #UserdFor#, #Upl#, #OwnerId#,
-      #Remark#, #PmPeriod#, #RecOn#, #RecBy#, #EditOn#, #EditBy#, #GmtCreate#, #GmtModified#, #IsDeleted#)
+      #Remark#, #PmPeriod#, #RecOn#, #RecBy#, #EditOn#, #EditBy#, #WorkcellId#, #GmtCreate#, #GmtModified#, #IsDeleted#)
       <selectKey resultClass="int" type="post" property="id" >
         select LAST_INSERT_ID() as value
       </selectKey>
@@ -75,16 +82,17 @@
       Rec_By = #RecBy#,
       Edit_On = #EditOn#,
       Edit_By = #EditBy#,
+      Workcell_Id = #WorkcellId#,
       Gmt_Create = #GmtCreate#,
       Gmt_Modified = #GmtModified#,
       WHERE id = #Id# AND is_deleted = 0
     </update>
 
     <!--根据主键删除单条记录-->
-    <update id="DeleteTongsDefinitionById" parameterClass="int">
+    <update id="DeleteTongsDefinitionById" parameterClass="TongsDefinition">
       UPDATE fixture_tongs_definition
       SET Is_Deleted = 1
-      WHERE id = #value#
+      WHERE id = #id#
     </update>
 
   </statements>

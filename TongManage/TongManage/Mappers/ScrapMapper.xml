@@ -15,6 +15,7 @@
       <result property="LogOn" column="Log_On"/>
       <result property="TongId" column="Tong_Id"/>
       <result property="Description" column="Description"/>
+      <result property="WorkcellId" column="Workcell_Id"/>
       <result property="GmtCreate" column="Gmt_Create" />
       <result property="GmtModified" column="Gmt_Modified"  />
       <result property="IsDeleted" column="Is_Deleted" />
@@ -24,21 +25,27 @@
   <statements>
 
     <!--查询所有记录-->
-    <select id="SelectAllScraps" resultMap="Scrap">
+    <select id="SelectAllScraps" parameterClass="Scrap" resultMap="Scrap">
       SELECT * from fixture_scrap
       WHERE is_deleted = 0
+      <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
+        workcell_id = #WorkCellId#
+      </isNotEqual>
     </select>
 
     <!--查询单条记录-->
-    <select id="SelectScrapById" parameterClass="int" resultMap="Scrap" >
+    <select id="SelectScrapById" parameterClass="Scrap" resultMap="Scrap" >
       SELECT * from fixture_scrap
       WHERE id = #value# AND is_deleted = 0
+      <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
+        workcell_id = #WorkCellId#
+      </isNotEqual>
     </select>
 
     <!--插入新记录-->
     <insert id="InsertScrap" parameterClass="Scrap">
-      INSERT into fixture_scrap ( Operator_Id, Log_On, Tong_Id, Description, Gmt_Create, Gmt_Modified, Is_Deleted)
-      values ( #OperatorId#, #LogOn#, #TongId#, #Description#, #GmtCreate#, #GmtModified#, #IsDeleted#)
+      INSERT into fixture_scrap ( Operator_Id, Log_On, Tong_Id, Description, Workcell_Id, Gmt_Create, Gmt_Modified, Is_Deleted)
+      values ( #OperatorId#, #LogOn#, #TongId#, #Description#, #WorkcellId#, #GmtCreate#, #GmtModified#, #IsDeleted#)
       <selectKey resultClass="int" type="post" property="id" >
         select LAST_INSERT_ID() as value
       </selectKey>
@@ -51,16 +58,17 @@
       Log_On = #LogOn#,
       Tong_Id = #TongId#,
       Description = #Description#,
+      Workcell_Id = #WorkcellId#,
       Gmt_Create = #GmtCreate#,
       Gmt_Modified = #GmtModified#,
       WHERE id = #Id# AND is_deleted = 0
     </update>
 
     <!--根据主键删除单条记录-->
-    <update id="DeleteScrapById" parameterClass="int">
+    <update id="DeleteScrapById" parameterClass="Scrap">
       UPDATE fixture_scrap
       SET Is_Deleted = 1
-      WHERE id = #value#
+      WHERE id = #id#
     </update>
 
   </statements>
