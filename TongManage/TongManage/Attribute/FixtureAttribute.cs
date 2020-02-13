@@ -68,7 +68,9 @@ namespace TongManage.Attribute
                                 string temp = TokenHelper.GetTokenJson(filterContext.HttpContext.Request.Headers["Authorization"]);
                                 TokenInfo token = JSONHelper.JSONToObject<TokenInfo>(temp);
                                 //进行登录验证
-                                User user = userDao.selectUserByUserName(token.UserName);
+                                User par = new User();
+                                par.Name = token.UserName;
+                                User user = userDao.selectUserByUserName(par);
                                 if(user==null)
                                 {
                                     var _response = filterContext.HttpContext.Response;
