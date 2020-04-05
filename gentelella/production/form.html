@@ -301,14 +301,21 @@
                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">姓名<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 ">
-                          <input type="text" id="first-name" required="required" class="form-control ">
+                          <input class="form-control" type="text" name="middle-name" id="name">
+                        </div>
+                      </div>
+                      <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">部门<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                          <input class="form-control" type="text" name="middle-name" id="workcell">
                         </div>
                       </div>
                       <div class="item form-group">
                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">工具夹类别 <span class="required">*</span>
                         </label>
 						<div class="col-md-6 col-sm-6 ">
-                          <select class="select2_group form-control">
+                          <select class="select2_group form-control" id="fixtureType">
                             <optgroup label="Alaskan/Hawaiian Time Zone">
                               <option value="AK">工具夹1</option>
                               <option value="HI">Hawaii</option>
@@ -362,14 +369,14 @@
                       <div class="item form-group">
                         <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">数量</label>
                         <div class="col-md-6 col-sm-6 ">
-                          <input id="middle-name" class="form-control" type="text" name="middle-name">
+                          <input class="form-control" type="text" name="middle-name" id="count">
                         </div>
                       </div>
                       <div class="item form-group">
                         <label class="col-form-label col-md-3 col-sm-3 label-align">采购入库单据号 <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 ">
-                          <input id="birthday" class="date-picker form-control" required="required" type="text">
+                          <input class="form-control" type="text" name="middle-name" id="seq">
                         </div>
                       </div>
 					   <!--图片-->
@@ -461,8 +468,9 @@
                       <div class="item form-group">
                         <div class="col-md-6 col-sm-6 offset-md-3">
                           <button class="btn btn-primary" type="button">Cancel</button>
-						  <button class="btn btn-primary" type="reset">Reset</button>
-                          <button type="submit" class="btn btn-success">Submit</button>
+              <button class="btn btn-primary" type="reset">Reset</button>
+              <button class="btn btn-primary" type="reset" id="purchase">Submit</button>
+                          <!-- <button class="btn btn-success" id="purchase">Submit</button> -->
                         </div>
                       </div>
 
@@ -523,6 +531,6 @@
     <script src="../vendors/starrr/dist/starrr.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
-	
+    <script src="./purchase/purchase.js"></script>
   </body>
 </html>
