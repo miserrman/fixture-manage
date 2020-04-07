@@ -11,6 +11,7 @@
     <title>文件夹管理平台 | </title>
 
     <!-- Bootstrap -->
+    <script src="./sidebar/sidebar.js"></script>
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -59,8 +60,8 @@
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <h3>某身份人员</h3>
-                <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> 采购入库 <span class="fa fa-chevron-down"></span></a>
+                <ul class="nav side-menu" id="sidebar">
+                  <!-- <li><a><i class="fa fa-home"></i> 采购入库 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="form.html">采购申请</a></li>
                       <li><a href="index2.html">Dashboard2</a></li>
@@ -70,11 +71,6 @@
                   <li><a><i class="fa fa-edit"></i> 进出库 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="form.html">General Form</a></li>
-                      <li><a href="form_advanced.html">Advanced Components</a></li>
-                      <li><a href="form_validation.html">Form Validation</a></li>
-                      <li><a href="form_wizards.html">Form Wizard</a></li>
-                      <li><a href="form_upload.html">Form Upload</a></li>
-                      <li><a href="form_buttons.html">Form Buttons</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> 报修 <span class="fa fa-chevron-down"></span></a>
@@ -110,7 +106,7 @@
                       <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
                       <li><a href="fixed_footer.html">Fixed Footer</a></li>
                     </ul>
-                  </li>
+                  </li> 
                 </ul>
               </div>
               <div class="menu_section">
@@ -153,7 +149,7 @@
                     </ul>
                   </li>                  
                   <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
-                </ul>
+                --></ul>
               </div>
 
             </div>
@@ -273,10 +269,9 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-          <!-- top tiles -->
           <div class="row" style="display: inline-block;" >
           <div class="tile_count">
-            <div class="col-md-2 col-sm-4  tile_stats_count">
+            <!-- <div class="col-md-2 col-sm-4  tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
               <div class="count">2500</div>
               <span class="count_bottom"><i class="green">4% </i> From last Week</span>
@@ -305,77 +300,13 @@
               <span class="count_top"><i class="fa fa-user"></i> Total Connections</span>
               <div class="count">7,325</div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-            </div>
+            </div> -->
           </div>
         </div>
           <!-- /top tiles -->
 
           <div class="row">
             <div class="col-md-12 col-sm-12 ">
-              <div class="dashboard_graph">
-
-                <div class="row x_title">
-                  <div class="col-md-6">
-                    <h3>Network Activities <small>Graph title sub-title</small></h3>
-                  </div>
-                  <div class="col-md-6">
-                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                      <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                      <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-9 col-sm-9 ">
-                  <div id="chart_plot_01" class="demo-placeholder"></div>
-                </div>
-                <div class="col-md-3 col-sm-3  bg-white">
-                  <div class="x_title">
-                    <h2>Top Campaign Performance</h2>
-                    <div class="clearfix"></div>
-                  </div>
-
-                  <div class="col-md-12 col-sm-12 ">
-                    <div>
-                      <p>Facebook Campaign</p>
-                      <div class="">
-                        <div class="progress progress_sm" style="width: 76%;">
-                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <p>Twitter Campaign</p>
-                      <div class="">
-                        <div class="progress progress_sm" style="width: 76%;">
-                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="60"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12 col-sm-12 ">
-                    <div>
-                      <p>Conventional Media</p>
-                      <div class="">
-                        <div class="progress progress_sm" style="width: 76%;">
-                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="40"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <p>Bill boards</p>
-                      <div class="">
-                        <div class="progress progress_sm" style="width: 76%;">
-                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-                <div class="clearfix"></div>
-              </div>
             </div>
 
           </div>
@@ -384,7 +315,7 @@
           <div class="row">
 
 
-            <div class="col-md-4 col-sm-4 ">
+            <!-- <div class="col-md-4 col-sm-4 ">
               <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
                   <h2>App Versions</h2>
@@ -489,9 +420,9 @@
 
                 </div>
               </div>
-            </div>
+            </div> -->
 
-            <div class="col-md-4 col-sm-4 ">
+            <!-- <div class="col-md-4 col-sm-4 ">
               <div class="x_panel tile fixed_height_320 overflow_hidden">
                 <div class="x_title">
                   <h2>Device Usage</h2>
@@ -567,10 +498,10 @@
                   </table>
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
-            <div class="col-md-4 col-sm-4 ">
+            <!-- <div class="col-md-4 col-sm-4 ">
               <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
                   <h2>Quick Settings</h2>
@@ -620,7 +551,7 @@
               </div>
             </div>
 
-          </div>
+          </div> -->
 
 
           <div class="row">
@@ -716,7 +647,7 @@
 
               <div class="row">
 
-                <div class="col-md-12 col-sm-12 ">
+                <!-- <div class="col-md-12 col-sm-12 ">
                   <div class="x_panel">
                     <div class="x_title">
                       <h2>Visitors location <small>geo-presentation</small></h2>
@@ -769,7 +700,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
 
               </div>
               <div class="row">
@@ -1004,6 +935,6 @@
 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
-	
+	<script src="./sidebar/sidebar.js> </script>
   </body>
 </html>
