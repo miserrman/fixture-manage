@@ -39,5 +39,10 @@ namespace TongManage.Utils
             }
             return sb.ToString();
         }
+
+        static void Main()
+        {
+            Console.WriteLine(MD5Encrypt("123456"));
+        }
     }
 }

@@ -39,8 +39,8 @@
     <select id="SelectUser" parameterClass="User" resultMap="User" >
       SELECT * from fixture_user
       WHERE id = #id# AND is_deleted = 0
-      <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
-        workcell_id = #WorkCellId#
+      <isNotEqual prepend="AND" property="WorkcellId" compareValue="-1">
+        workcell_id = #WorkcellId#
       </isNotEqual>
       <isNotNull prepend="AND" property="WorkNo">
         work_no = #WorkNo#
