@@ -22,6 +22,16 @@ namespace TongManage.Models
         private DateTime gmtModified;
         private bool isDeleted;
 
+        public InventoryRecord()
+        {
+            this.id = -1;
+            this.logBy = -1;
+            this.handledBy = -1;
+            this.productionLine = -1;
+            this.tongId = -1;
+            this.workcellId = -1;
+        }
+
         public int Id { get => id; set => id = value; }
         public DateTime LogOn { get => logOn; set => logOn = value; }
         public int LogBy { get => logBy; set => logBy = value; }

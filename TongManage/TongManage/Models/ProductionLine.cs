@@ -15,6 +15,12 @@ namespace TongManage.Models
         private DateTime gmtModified;
         private bool isDeleted;
 
+        public ProductionLine()
+        {
+            this.id = -1;
+            this.workcellId = -1;
+        }
+
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public DateTime GmtCreate { get => gmtCreate; set => gmtCreate = value; }
