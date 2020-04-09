@@ -36,7 +36,10 @@
     <!--查询单条记录-->
     <select id="SelectPurchaseById" parameterClass="Purchase" resultMap="Purchase" >
       SELECT * from fixture_purchase
-      WHERE id = #id# AND is_deleted = 0
+      WHERE is_deleted = 0
+      <isNotEqual prepend="AND" property="Id" compareValue="-1">
+        id = #Id#
+      </isNotEqual>
       <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
         workcell_id = #WorkCellId#
       </isNotEqual>

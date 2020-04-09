@@ -38,10 +38,15 @@
     <!--查询单条用户记录-->
     <select id="SelectUser" parameterClass="User" resultMap="User" >
       SELECT * from fixture_user
-      WHERE id = #id# AND is_deleted = 0
-      <isNotEqual prepend="AND" property="WorkcellId" compareValue="-1">
-        workcell_id = #WorkcellId#
-      </isNotEqual>
+      WHERE is_deleted = 0      
+      <isNotEqual prepend="AND" property="Id" compareValue="-1">
+        id = #Id#
+      </isNotEqual> 
+      <isNotNull property="WorkcellId">
+        <isNotEqual prepend="AND" property="WorkcellId" compareValue="-1">
+          workcell_id = #WorkcellId#
+        </isNotEqual>
+      </isNotNull>      
       <isNotNull prepend="AND" property="WorkNo">
         work_no = #WorkNo#
       </isNotNull>
