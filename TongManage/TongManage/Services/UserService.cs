@@ -34,6 +34,10 @@ namespace TongManage.Services
         public string login(User userp)
         {
             User user = userDao.selectUserByUserName(userp);
+            if(user==null)
+            {
+                return null;
+            }
             if (user.Password == MD5Util.MD5Encrypt(userp.Password))
             {
                 //生成token
