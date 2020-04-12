@@ -38,7 +38,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>文件夹管理平台!</span></a>
+              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>工具夹管理平台</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -275,16 +275,13 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>采购信息</h3>
+                <h3>创建工具夹类别</h3>
               </div>
 
               <div class="title_right">
                 <div class="col-md-5 col-sm-5  form-group pull-right top_search">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">搜索</button>
-                    </span>
+                   
                   </div>
                 </div>
               </div>
@@ -295,88 +292,83 @@
                 <div class="x_panel">
 				<div class="x_content">
                     <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <form id="info" data-parsley-validate class="form-horizontal form-label-left">
 
                       <div class="item form-group">
-                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">姓名<span class="required">*</span>
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">类别ID<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 ">
                           <input class="form-control" type="text" name="middle-name" id="name">
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">部门<span class="required">*</span>
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">工具夹类别名<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 ">
                           <input class="form-control" type="text" name="middle-name" id="workcell">
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">工具夹类别 <span class="required">*</span>
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">工具夹类别代码<span class="required">*</span>
                         </label>
-						<div class="col-md-6 col-sm-6 ">
-                          <select class="select2_group form-control" id="fixtureType">
-                            <optgroup label="Alaskan/Hawaiian Time Zone">
-                              <option value="AK">工具夹1</option>
-                              <option value="HI">Hawaii</option>
-                            </optgroup>
-                            <optgroup label="Pacific Time Zone">
-                              <option value="CA">California</option>
-                              <option value="NV">Nevada</option>
-                              <option value="OR">Oregon</option>
-                              <option value="WA">Washington</option>
-                            </optgroup>
-                            <optgroup label="Mountain Time Zone">
-                              <option value="AZ">Arizona</option>
-                              <option value="CO">Colorado</option>
-                              <option value="ID">Idaho</option>
-                              <option value="MT">Montana</option>
-                              <option value="NE">Nebraska</option>
-                              <option value="NM">New Mexico</option>
-                              <option value="ND">North Dakota</option>
-                              <option value="UT">Utah</option>
-                              <option value="WY">Wyoming</option>
-                            </optgroup>
-                            <optgroup label="Central Time Zone">
-                              <option value="AL">Alabama</option>
-                              <option value="AR">Arkansas</option>
-                              <option value="IL">Illinois</option>
-                              <option value="IA">Iowa</option>
-                              <option value="KS">Kansas</option>
-                              <option value="KY">Kentucky</option>
-                              <option value="LA">Louisiana</option>
-                              <option value="MN">Minnesota</option>
-                              <option value="MS">Mississippi</option>
-                              <option value="MO">Missouri</option>
-                              <option value="OK">Oklahoma</option>
-                              <option value="SD">South Dakota</option>
-                              <option value="TX">Texas</option>
-                              <option value="TN">Tennessee</option>
-                              <option value="WI">Wisconsin</option>
-                            </optgroup>
-                            <optgroup label="Eastern Time Zone">
-                              <option value="CT">Connecticut</option>
-                              <option value="DE">Delaware</option>
-                              <option value="FL">Florida</option>
-                              <option value="GA">Georgia</option>
-                              <option value="IN">Indiana</option>
-                              <option value="ME">Maine</option>
-                              
-                            </optgroup>
-                          </select>
+                        <div class="col-md-6 col-sm-6 ">
+                          <input class="form-control" type="text" name="middle-name" id="workcell">
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">数量</label>
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">模具组<span class="required">*</span>
+                        </label>
                         <div class="col-md-6 col-sm-6 ">
-                          <input class="form-control" type="text" name="middle-name" id="count">
+                          <input class="form-control" type="text" name="middle-name" id="workcell">
                         </div>
                       </div>
                       <div class="item form-group">
-                        <label class="col-form-label col-md-3 col-sm-3 label-align">采购入库单据号 <span class="required">*</span>
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">工夹具料号<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 ">
-                          <input class="form-control" type="text" name="middle-name" id="seq">
+                          <input class="form-control" type="text" name="middle-name" id="workcell">
+                        </div>
+                      </div>
+                      <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">用途<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                          <input class="form-control" type="text" name="middle-name" id="workcell">
+                        </div>
+                      </div>
+                      <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">UPL<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                          <input class="form-control" type="text" name="middle-name" id="workcell">
+                        </div>
+                      </div>
+                      <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">责任人<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                          <input class="form-control" type="text" name="middle-name" id="workcell">
+                        </div>
+                      </div>
+                      <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">备注<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                          <input class="form-control" type="text" name="middle-name" id="workcell">
+                        </div>
+                      </div>
+                      <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">保养点周期<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                          <input class="form-control" type="text" name="middle-name" id="workcell">
+                        </div>
+                      </div>
+                      <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">录入人<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 ">
+                          <input class="form-control" type="text" name="middle-name" id="workcell">
                         </div>
                       </div>
                       <div class="item form-group">
@@ -387,11 +379,8 @@
                           <!-- <button class="btn btn-success" id="purchase">Submit</button> -->
                         </div>
                       </div>
-					   <!--图片-->
-					  <div class="item form-group">
-					  <label class="col-form-label col-md-3 col-sm-3 label-align">上传相关图片 <span class="required">*</span>
-                        </label>
-					   <div class="col-md-6 col-sm-6">
+                      </div>
+                      
 					   
 					  <!--<div id="alerts"></div>-->
 					<div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor-one">
@@ -450,10 +439,7 @@
                       </div>
                       <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
                     </div>-->
-                    <div class="btn-group">
-                      <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
-                      <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
-                    </div>
+                   
                     <!--<div class="btn-group">
                       <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
                       <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
@@ -461,26 +447,10 @@
 					
                   </div>
 
-                  <div id="editor-one" class="editor-wrapper "></div>
-
-                  <textarea name="descr" id="descr" style="display:none;"></textarea>
-                  
-                  <br />
-
-                  <div class="ln_solid"></div>
+                
 				  </div>
 				  </div>
-					 <!--图片-->
-					 
-                      <div class="ln_solid"></div>
-                      <div class="item form-group">
-                        <div class="col-md-6 col-sm-6 offset-md-3">
-                          <button class="btn btn-primary" type="button">Cancel</button>
-              <button class="btn btn-primary" type="reset">Reset</button>
-              <button class="btn btn-primary" type="reset" id="purchase">Submit</button>
-                          <!-- <button class="btn btn-success" id="purchase">Submit</button> -->
-                        </div>
-                      </div>
+					
 
                     </form>
                   </div>
@@ -539,6 +509,6 @@
     <script src="../vendors/starrr/dist/starrr.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
-    <script src="./purchase/purchase.js"></script>
+    <script src="./def/def.js"></script>
   </body>
 </html>

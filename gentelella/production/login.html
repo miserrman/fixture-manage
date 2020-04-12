@@ -17,9 +17,10 @@
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- Animate.css -->
     <link href="../vendors/animate.css/animate.min.css" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <script src="./login/login.js"></script>
   </head>
 
   <body class="login">
@@ -31,15 +32,22 @@
         <div class="animate form login_form">
           <section class="login_content">
             <form>
-              <h1>文件夹工具管理平台</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <h1><i class="fa fa-paw"></i> 文件夹工具管理平台!</h1>
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input id="username" type="text" class="form-control" placeholder="Username" required="" />
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.html">登录</a>
+                <input id="password" type="password" class="form-control" placeholder="Password" required="" />
+              </div>
+              <div style="color:red" id="mention">
+                <p>请输入用户名</p>
+                <p>请输入密码</p>
+                <p>密码和用户名不匹配</p>
+              </div>
+              <div>
+                <a class="btn btn-default submit" id="submit">登录</a>
                 <a class="reset_pass" href="#">Lost your password?</a>
               </div>
 
@@ -53,9 +61,6 @@
                 <div class="clearfix"></div>
                 <br />
 
-                <div>
-                  <h1><i class="fa fa-paw"></i> 文件夹工具管理平台!</h1>
-                </div>--
               </div>
             </form>
           </section>
