@@ -33,7 +33,10 @@
     <!--查询单条记录-->
     <select id="SelectProductionLineById" parameterClass="ProductionLine" resultMap="ProductionLine" >
       SELECT * from fixture_production_line
-      WHERE id = #id# AND is_delete = 0
+      WHERE is_delete = 0
+      <isNotEqual prepend="AND" property="Id" compareValue="-1">
+        id = #Id#
+      </isNotEqual>
       <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
         workcell_id = #WorkCellId#
       </isNotEqual>

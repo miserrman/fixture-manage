@@ -29,6 +29,17 @@ namespace TongManage.Models
         private DateTime gmtModified;
         private bool isDeleted;
 
+        public TongsEntity()
+        {
+            this.id = -1;
+            this.seqId = -1;
+            this.userdCount = -1;
+            this.operatorId = -1;
+            this.repairCounts = -1;
+            this.expextedLife = -1;
+            this.workcellId = -1;
+    }
+
         public int Id { get => id; set => id = value; }
         public string Code { get => code; set => code = value; }
         public int SeqId { get => seqId; set => seqId = value; }

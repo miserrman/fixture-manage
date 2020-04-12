@@ -28,6 +28,18 @@ namespace TongManage.Models
         private DateTime gmtModified;
         private bool isDeleted;
 
+        public TongsDefinition()
+        {
+            this.id = -1;
+            this.workcellId = -1;
+            this.familyId = -1;
+            this.upl = -1;
+            this.ownerId = -1;
+            this.pmPeriod = -1;
+            this.recBy = -1;
+            this.editBy = -1;
+    }
+
         public int Id { get => id; set => id = value; }
         public int WorkcellId { get => workcellId; set => workcellId = value; }
         public int FamilyId { get => familyId; set => familyId = value; }

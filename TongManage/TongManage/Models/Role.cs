@@ -14,6 +14,11 @@ namespace TongManage.Models
         private DateTime gmtModified;
         private bool isDeleted;
 
+        public Role()
+        {
+            this.id = -1;
+        }
+
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public DateTime GmtCreate { get => gmtCreate; set => gmtCreate = value; }

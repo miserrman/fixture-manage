@@ -47,7 +47,10 @@
     <!--查询单条记录-->
     <select id="SelectTongsEntityById" parameterClass="TongsEntity" resultMap="TongsEntity" >
       SELECT * from fixture_tongs_entity
-      WHERE id = #id# AND is_deleted = 0
+      WHERE is_deleted = 0
+      <isNotEqual prepend="AND" property="Id" compareValue="-1">
+        id = #Id#
+      </isNotEqual>
       <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
         workcell_id = #WorkCellId#
       </isNotEqual>

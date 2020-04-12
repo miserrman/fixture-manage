@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28306.52
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TongManage", "TongManage\TongManage.csproj", "{1FF42E3F-234C-4C13-B93A-8C777A7888C5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TongManage.Tests", "TongManage.Tests\TongManage.Tests.csproj", "{29D955BA-D0E9-4DB3-9A40-6307845C164C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TongManageTests", "TongManageTests\TongManageTests.csproj", "{D95ECC76-932F-4213-BA82-DC8F2180A49F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{29D955BA-D0E9-4DB3-9A40-6307845C164C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29D955BA-D0E9-4DB3-9A40-6307845C164C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29D955BA-D0E9-4DB3-9A40-6307845C164C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D95ECC76-932F-4213-BA82-DC8F2180A49F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D95ECC76-932F-4213-BA82-DC8F2180A49F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D95ECC76-932F-4213-BA82-DC8F2180A49F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D95ECC76-932F-4213-BA82-DC8F2180A49F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
