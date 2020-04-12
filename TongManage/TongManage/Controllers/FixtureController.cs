@@ -95,7 +95,80 @@ namespace TongManage.Controllers
             List<TongsDefinition> tongsDefinitionList = fixtureService.getAllTongsDefinitions(definition);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(tongsDefinitionList));
         }
-      
-        //TODO: 删除方法？？
+
+        /// <summary>
+        /// 购买请求方法
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public string PurchaseEntity(string body)
+        {
+            // TODO: 购买请求
+            return null;
+        }
+
+        /// <summary>
+        /// 报废请求方法
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public string ScrapEntity(int id, string body)
+        {
+            // TODO: 报废方法
+            return null;
+        }
+
+        /// <summary>
+        /// 维修请求方法
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public string MaintainEntity(int id, string body)
+        {
+            // TODO: 维修方法
+            return null;
+        }
+
+        /// <summary>
+        /// 购买请求响应方法
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public string PurchaseResponse(int id, string body)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// 报废请求响应方法
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public string ScrapResponse(int id, string body)
+        {
+            // TODO: 报废方法
+            return null;
+        }
+
+        /// <summary>
+        /// 维修请求响应方法
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public string MaintainResponse(int id, string body)
+        {
+            // TODO: 维修方法
+            return null;
+        }
     }
 }
