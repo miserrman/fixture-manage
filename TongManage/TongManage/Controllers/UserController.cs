@@ -17,6 +17,28 @@ namespace TongManage.Controllers
     {
         static UserService userService = new UserService();
         /// <summary>
+        /// 利用token返回用户信息
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        [HttpGet]
+        public string getInfoByToken()
+        {
+            string token = HttpContext.Request.Headers["Authorization"];
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            User user = new User();
+            user.Name = tokenInfo.UserName;
+            User result = userService.getInfoByToken(user);
+            if (result == null)
+            {
+                return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
+            }
+            else
+            {
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
+            }
+        }
+        /// <summary>
         /// 用户注册
         /// </summary>
         /// <param name="body">用户类</param>

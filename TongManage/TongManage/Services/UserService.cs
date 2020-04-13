@@ -12,6 +12,18 @@ namespace TongManage.Services
     {
         static UserDao userDao = new UserDao();
         /// <summary>
+        /// 从token返回用户信息
+        /// </summary>
+        /// <param name="user">用户类</param>
+        /// <returns></returns>
+        public User getInfoByToken(User userp)
+        {
+            User user = userDao.selectUserByUserName(userp);
+            return user;
+        }
+
+
+        /// <summary>
         /// 用户注册
         /// </summary>
         /// <param name="user">用户类</param>
