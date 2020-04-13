@@ -1,3 +1,5 @@
+const createDefUrl = 
+
 defMap = {
     "workcell": 0,
     "familyId": 0,
@@ -11,35 +13,46 @@ defMap = {
     "remark": "",
     "pmPeriod": "",
     "recOn": "",
-    "recBy": 0,
+    "recBy": "",
     "editOn": "",
-    "editBy": 0
+    "editBy": ""
 }
 
 submit = function() {
     node = document.querySelector("#createDef")
+    let local = localStorage
     node.addEventListener("click", function() {
+        
         if (getInfoValue()) {
+            defMap["workcell"] = 1
+            defMap["recOn"] = "2019-3-25 12:30:23"
             data = JSON.stringify(defMap)
+            console.log(data)
             $.ajax({
-                
+                type: "POST",
+                url: "http://localhost:54755/Fixture/CreateDef?body=" + data,
+                error: function(reason) {
+                    console.log(reason)
+                },
+                success: function(response) {
+                    console.log(response)
+                }
             })
         }
     })
 }
 getInfoValue = function() {
     let valueArr = []
-    let divNode = document.querySelector("#info").querySelectorAll("div")
+    let divNode = document.querySelector("#info").querySelectorAll(".form-control")
+    console.log(divNode.length)
     for (let i = 0; i < divNode.length; i++) {
-        let node = divNode[i].querySelector(".form-control")
+        let node = divNode[i]
         if (node != null && node.value == "") {
-            console.log(i)
             return false
         }
         if (node != null)
             valueArr.push(node.value)
-    }
-    console.log(valueArr)
+    } 
     let eliminte = ["workcell", "recOn", "editOn"]
     let keys = []
     for (key in defMap) {
