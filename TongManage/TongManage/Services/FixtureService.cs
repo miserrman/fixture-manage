@@ -15,6 +15,11 @@ namespace TongManage.Services
     public class FixtureService
     {
         private static TongsDefinitionDao tongsDefinitionDao = new TongsDefinitionDao();
+        private static PurchaseDao purchaseDao = new PurchaseDao();
+        private static ScrapDao scrapDao = new ScrapDao();
+        private static RepairRecordDao repairRecordDao = new RepairRecordDao();
+
+        private static StockService stockService = new StockService();
 
         /// <summary>
         /// 创建一个工夹具类别
@@ -72,6 +77,119 @@ namespace TongManage.Services
         public List<TongsDefinition> getAllTongsDefinitions(TongsDefinition definition)
         {
             return tongsDefinitionDao.selectAllTongsDefinitions(definition).ToList<TongsDefinition>();
+        }
+
+        /// <summary>
+        ///  购买请求方法
+        /// </summary>
+        /// <param name="purchase"></param>
+        /// <returns></returns>
+        public Purchase PurhaseRequest(Purchase purchase)
+        {
+            purchase.GmtCreate = DateTime.Now.ToLocalTime();
+            purchase.GmtModified = DateTime.Now.ToLocalTime();
+            purchase.Status = 0;
+            if (purchaseDao.insertPurchase(purchase) == 1)
+                return purchase;
+            else return null;
+        }
+
+        /// <summary>
+        /// 报废请求方法
+        /// </summary>
+        /// <param name="scrap"></param>
+        /// <returns></returns>
+        public Scrap ScrapRequest(Scrap scrap)
+        {
+            scrap.GmtCreate = DateTime.Now.ToLocalTime();
+            scrap.GmtModified = DateTime.Now.ToLocalTime();
+            scrap.Status = 0;
+            if (scrapDao.updateScrap(scrap) == 1)
+                return scrap;
+            return null;
+        }
+
+        /// <summary>
+        ///  维修请求方法
+        /// </summary>
+        /// <param name="repairRecord"></param>
+        /// <returns></returns>
+        public RepairRecord MaintainRequest(RepairRecord repairRecord)
+        {
+            repairRecord.GmtCreate = DateTime.Now.ToLocalTime();
+            repairRecord.GmtModified = DateTime.Now.ToLocalTime();
+            repairRecord.Status = 0;
+            if (repairRecordDao.updateRepairRecord(repairRecord) == 1)
+                return repairRecord;
+            return null;
+        }
+
+        /// <summary>
+        ///  更新购买记录状态方法
+        /// </summary>
+        /// <param name="purchase"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public Purchase UpdatePurchaseStatus(Purchase purchase, int status)
+        {
+            purchase.GmtCreate = DateTime.Now.ToLocalTime();
+            purchase.GmtModified = DateTime.Now.ToLocalTime();
+            purchase.Status = status;
+            if (purchaseDao.updatePurchase(purchase) == 1)
+            {
+                if (3 == status)
+                {
+                    CreateInventoryInRecord(purchase);
+                }
+                return purchase;
+            } 
+            else return null;
+        }
+
+        /// <summary>
+        ///  更新报废记录状态方法
+        /// </summary>
+        /// <param name="scrap"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public Scrap UpdateScrapStatus(Scrap scrap, int status)
+        {
+            scrap.GmtCreate = DateTime.Now.ToLocalTime();
+            scrap.GmtModified = DateTime.Now.ToLocalTime();
+            scrap.Status = status;
+            if (scrapDao.updateScrap(scrap) == 1)
+                return scrap;
+            return null;
+        }
+
+        /// <summary>
+        ///  更新维修记录状态方法
+        /// </summary>
+        /// <param name="repairRecord"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public RepairRecord UpdateRepairRecordStatus(RepairRecord repairRecord, int status)
+        {
+            repairRecord.GmtCreate = DateTime.Now.ToLocalTime();
+            repairRecord.GmtModified = DateTime.Now.ToLocalTime();
+            repairRecord.Status = status;
+            if (repairRecordDao.updateRepairRecord(repairRecord) == 1)
+                return repairRecord;
+            return null;
+        }
+
+        /// <summary>
+        /// 根据采购记录创建一条入库记录
+        /// </summary>
+        /// <param name="purchase"></param>
+        /// <returns></returns>
+        private bool CreateInventoryInRecord(Purchase purchase)
+        {
+            // TODO: 有待商榷
+            InventoryRecord inventoryRecord = new InventoryRecord();
+            inventoryRecord.InOrOut = false;
+
+            return true;
         }
     }
 }
