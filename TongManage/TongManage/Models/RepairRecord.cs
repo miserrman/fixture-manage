@@ -18,6 +18,13 @@ namespace TongManage.Models
         private DateTime gmtModified;
         private bool isDeleted;
 
+        public RepairRecord()
+        {
+            this.id = -1;
+            this.tongId = -1;
+            this.workcellId = -1;
+        }
+
         public int Id { get => id; set => id = value; }
         public DateTime RepairOn { get => repairOn; set => repairOn = value; }
         public int TongId { get => tongId; set => tongId = value; }

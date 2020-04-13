@@ -20,6 +20,13 @@ namespace TongManage.Models
         private DateTime gmtModified;
         private bool isDeleted;
 
+        public User()
+        {
+            this.id = -1;
+            this.roleId = -1;
+            this.workcellId = -1;
+        }
+
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string UserPhoto { get => userPhoto; set => userPhoto = value; }

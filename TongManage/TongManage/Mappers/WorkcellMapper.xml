@@ -29,7 +29,10 @@
     <!--查询单条记录-->
     <select id="SelectWorkcellById" parameterClass="Workcell" resultMap="Workcell" >
       SELECT * from fixture_workcell
-      WHERE id = #Id# AND is_deleted = 0
+      WHERE is_deleted = 0
+      <isNotEqual prepend="AND" property="Id" compareValue="-1">
+        id = #Id#
+      </isNotEqual>
     </select>
 
     <!--插入新记录-->

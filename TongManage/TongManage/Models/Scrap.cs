@@ -18,6 +18,14 @@ namespace TongManage.Models
         private DateTime gmtModified;
         private bool isDeleted;
 
+        public Scrap()
+        {
+            this.id = -1;
+            this.operatorId = -1;
+            this.tongId = -1;
+            this.workcellId = -1;
+        }
+
         public int Id { get => id; set => id = value; }
         public int OperatorId { get => operatorId; set => operatorId = value; }
         public DateTime LogOn { get => logOn; set => logOn = value; }
