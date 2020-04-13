@@ -14,6 +14,7 @@ namespace TongManage.Models
         private int tongId;
         private string description;
         private int workcellId;
+        private int status;
         private DateTime gmtCreate;
         private DateTime gmtModified;
         private bool isDeleted;
@@ -24,6 +25,7 @@ namespace TongManage.Models
             this.operatorId = -1;
             this.tongId = -1;
             this.workcellId = -1;
+            this.Status = -1;
         }
 
         public int Id { get => id; set => id = value; }
@@ -35,5 +37,6 @@ namespace TongManage.Models
         public DateTime GmtModified { get => gmtModified; set => gmtModified = value; }
         public bool IsDeleted { get => isDeleted; set => isDeleted = value; }
         public int WorkcellId { get => workcellId; set => workcellId = value; }
+        public int Status { get => status; set => status = value; }
     }
 }
