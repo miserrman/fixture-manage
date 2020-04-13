@@ -20,7 +20,7 @@ namespace TongManage.Models
         private DateTime documentDate;
         private int operatorId;
         private bool isScrapped;
-        private bool status;
+        private int status;
         private int repairCounts;
         private DateTime lastRepairOn;
         private int expextedLife;
@@ -38,6 +38,7 @@ namespace TongManage.Models
             this.repairCounts = -1;
             this.expextedLife = -1;
             this.workcellId = -1;
+            this.status = -1;
     }
 
         public int Id { get => id; set => id = value; }
@@ -52,7 +53,7 @@ namespace TongManage.Models
         public DateTime DocumentDate { get => documentDate; set => documentDate = value; }
         public int OperatorId { get => operatorId; set => operatorId = value; }
         public bool IsScrapped { get => isScrapped; set => isScrapped = value; }
-        public bool Status { get => status; set => status = value; }
+        public int Status { get => status; set => status = value; }
         public int RepairCounts { get => repairCounts; set => repairCounts = value; }
         public DateTime LastRepairOn { get => lastRepairOn; set => lastRepairOn = value; }
         public int ExpextedLife { get => expextedLife; set => expextedLife = value; }

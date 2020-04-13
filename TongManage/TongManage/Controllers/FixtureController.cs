@@ -104,8 +104,13 @@ namespace TongManage.Controllers
         [HttpPost]
         public string PurchaseEntity(string body)
         {
-            // TODO: 购买请求
-            return null;
+            //string body = "{}";
+            Purchase purchase = JSONHelper.JSONToObject<Purchase>(body);
+            Purchase res = fixtureService.PurhaseRequest(purchase);
+
+            if (res != null)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(res));
+            else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
 
         /// <summary>
@@ -117,8 +122,13 @@ namespace TongManage.Controllers
         [HttpPut]
         public string ScrapEntity(int id, string body)
         {
-            // TODO: 报废方法
-            return null;
+            Scrap scrap = JSONHelper.JSONToObject<Scrap>(body);
+            scrap.Id = id;
+            Scrap res = fixtureService.ScrapRequest(scrap);
+
+            if (res != null)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(res));
+            else return null;
         }
 
         /// <summary>
@@ -130,45 +140,66 @@ namespace TongManage.Controllers
         [HttpPut]
         public string MaintainEntity(int id, string body)
         {
-            // TODO: 维修方法
-            return null;
+            RepairRecord repairRecord = JSONHelper.JSONToObject<RepairRecord>(body);
+            repairRecord.Id = id;
+            RepairRecord res = fixtureService.MaintainRequest(repairRecord);
+
+            if (res != null)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(res));
+            else return null;
         }
 
         /// <summary>
-        /// 购买请求响应方法
+        /// 购买记录状态更新
         /// </summary>
         /// <param name="body"></param>
         /// <returns></returns>
         [HttpPut]
-        public string PurchaseResponse(int id, string body)
+        public string PurchaseStatus(int id, int status, string body)
         {
-            return null;
+            Purchase purchase = JSONHelper.JSONToObject<Purchase>(body);
+            purchase.Id = id;
+            Purchase res = fixtureService.UpdatePurchaseStatus(purchase, status);
+
+            if (res != null)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(res));
+            else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
 
         /// <summary>
-        /// 报废请求响应方法
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="body"></param>
-        /// <returns></returns>
-        [HttpPut]
-        public string ScrapResponse(int id, string body)
-        {
-            // TODO: 报废方法
-            return null;
-        }
-
-        /// <summary>
-        /// 维修请求响应方法
+        /// 报废记录状态更新
         /// </summary>
         /// <param name="id"></param>
         /// <param name="body"></param>
         /// <returns></returns>
         [HttpPut]
-        public string MaintainResponse(int id, string body)
+        public string ScrapStatus(int id, int status, string body)
         {
-            // TODO: 维修方法
-            return null;
+            Scrap scrap = JSONHelper.JSONToObject<Scrap>(body);
+            scrap.Id = id;
+            Scrap res = fixtureService.UpdateScrapStatus(scrap, status);
+
+            if (res != null)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(res));
+            else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
+        }
+
+        /// <summary>
+        /// 维修记录状态更新
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public string MaintainStatus(int id, int status, string body)
+        {
+            RepairRecord repairRecord = JSONHelper.JSONToObject<RepairRecord>(body);
+            repairRecord.Id = id;
+            RepairRecord res = fixtureService.UpdateRepairRecordStatus(repairRecord, status);
+
+            if (res != null)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(res));
+            else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
     }
 }
