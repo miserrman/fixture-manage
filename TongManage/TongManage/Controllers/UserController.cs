@@ -35,7 +35,10 @@ namespace TongManage.Controllers
             }
             else
             {
-                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
+                UserInfoVo userInfoVo = new UserInfoVo();
+                userInfoVo.Name = result.Name;
+                userInfoVo.WorkcellId = result.WorkcellId;
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(userInfoVo));
             }
         }
         /// <summary>
