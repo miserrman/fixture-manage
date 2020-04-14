@@ -48,7 +48,7 @@ namespace TongManage.Controllers
         [HttpPut]
         public string UpdateRecord(int id,string body)
         {
-            string token=HttpContext.Request.Headers["Authorization"];
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);
             RepairRecord repairRecord = JSONHelper.JSONToObject<RepairRecord>(body);
             repairRecord.Id = id;
             RepairRecord result = repairService.UpdateRecord(repairRecord);
@@ -65,7 +65,7 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetCompleteRecord()
         {
-            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
             TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
             int WorkcellId = tokenInfo.workCell;
             RepairRecord repairRecord = new RepairRecord();
@@ -81,7 +81,7 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetNotCompleteRecord()
         {
-            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
             TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
             int WorkcellId = tokenInfo.workCell;
             RepairRecord repairRecord = new RepairRecord();
@@ -98,7 +98,7 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetRecord(int id)
         {
-            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
             TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
             int WorkcellId = tokenInfo.workCell;
             RepairRecord repairRecord = new RepairRecord();
@@ -120,7 +120,7 @@ namespace TongManage.Controllers
         [HttpGet]
         public string GetRepairChart()
         {
-            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
             TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
             int WorkcellId = tokenInfo.workCell;
             RepairRecord repairRecord = new RepairRecord();

@@ -24,7 +24,7 @@ namespace TongManage.Controllers
         [HttpGet]
         public string getInfoByToken()
         {
-            string token = HttpContext.Request.Headers["Authorization"];
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);
             TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
             User user = new User();
             user.Name = tokenInfo.UserName;
