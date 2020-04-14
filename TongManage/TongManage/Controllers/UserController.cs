@@ -26,18 +26,20 @@ namespace TongManage.Controllers
         {
             string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);
             TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            UserInfoVo userInfoVo = new UserInfoVo();
+            userInfoVo.Name = tokenInfo.UserName;
             User user = new User();
             user.Name = tokenInfo.UserName;
-            User result = userService.getInfoByToken(user);
+            Workcell workcell = new Workcell();
+            workcell.Id = tokenInfo.workCell;
+            Workcell result = userService.getInfoByToken(workcell);
             if (result == null)
             {
                 return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
             }
             else
             {
-                UserInfoVo userInfoVo = new UserInfoVo();
-                userInfoVo.Name = result.Name;
-                userInfoVo.WorkcellId = result.WorkcellId;
+                userInfoVo.WorkcellName = result.Name;
                 return JSONHelper.ObjectToJSON(ResponseUtil.Ok(userInfoVo));
             }
         }
