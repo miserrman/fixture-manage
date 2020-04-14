@@ -34,7 +34,6 @@ namespace TongManage.Controllers
         [HttpPost]
         public string CreateRecord(string body)
         {
-
             RepairRecord repairRecord = JSONHelper.JSONToObject<RepairRecord>(body);
             RepairRecord result = repairService.CreateRecord(repairRecord);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
@@ -48,7 +47,6 @@ namespace TongManage.Controllers
         [HttpPut]
         public string UpdateRecord(int id,string body)
         {
-            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);
             RepairRecord repairRecord = JSONHelper.JSONToObject<RepairRecord>(body);
             repairRecord.Id = id;
             RepairRecord result = repairService.UpdateRecord(repairRecord);

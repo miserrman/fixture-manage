@@ -26,7 +26,7 @@ namespace TongManage.Controllers
         */
 
         private static FixtureService fixtureService = new FixtureService();
-
+        private static UserService userService = new UserService();
         /// <summary>
         /// 创建工具夹类别
         /// </summary>
@@ -37,7 +37,11 @@ namespace TongManage.Controllers
         {
             string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);
             TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            User p = new User();
+            p.Name = tokenInfo.UserName;
+            User user = userService.getUserByName(p);
             TongsDefinition tongsDefinition = JSONHelper.JSONToObject<TongsDefinition>(body);
+            tongsDefinition.RecBy = user.Id;
             tongsDefinition = fixtureService.createTongsDefinition(tongsDefinition);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(tongsDefinition));
         }
@@ -51,8 +55,14 @@ namespace TongManage.Controllers
         [HttpPut]
         public string UpdateDef(int id, string body)
         {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            User p = new User();
+            p.Name = tokenInfo.UserName;
+            User user = userService.getUserByName(p);
             TongsDefinition tongsDefinition = JSONHelper.JSONToObject<TongsDefinition>(body);
             tongsDefinition.Id = id;
+            tongsDefinition.EditBy = user.Id;
             tongsDefinition = fixtureService.updateTongsDefinition(tongsDefinition);
             if (null == tongsDefinition)
             {
@@ -106,8 +116,13 @@ namespace TongManage.Controllers
         [HttpPost]
         public string PurchaseEntity(string body)
         {
-            //string body = "{}";
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            User p = new User();
+            p.Name = tokenInfo.UserName;
+            User user = userService.getUserByName(p);
             Purchase purchase = JSONHelper.JSONToObject<Purchase>(body);
+            purchase.OperatorId = user.Id;
             Purchase res = fixtureService.PurhaseRequest(purchase);
 
             if (res != null)
@@ -124,8 +139,14 @@ namespace TongManage.Controllers
         [HttpPut]
         public string ScrapEntity(int id, string body)
         {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            User p = new User();
+            p.Name = tokenInfo.UserName;
+            User user = userService.getUserByName(p);
             Scrap scrap = JSONHelper.JSONToObject<Scrap>(body);
             scrap.Id = id;
+            scrap.OperatorId = user.Id;
             Scrap res = fixtureService.ScrapRequest(scrap);
 
             if (res != null)
@@ -159,8 +180,14 @@ namespace TongManage.Controllers
         [HttpPut]
         public string PurchaseStatus(int id, int status, string body)
         {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            User p = new User();
+            p.Name = tokenInfo.UserName;
+            User user = userService.getUserByName(p);
             Purchase purchase = JSONHelper.JSONToObject<Purchase>(body);
             purchase.Id = id;
+            purchase.OperatorId = user.Id;
             Purchase res = fixtureService.UpdatePurchaseStatus(purchase, status);
 
             if (res != null)
@@ -177,8 +204,14 @@ namespace TongManage.Controllers
         [HttpPut]
         public string ScrapStatus(int id, int status, string body)
         {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            User p = new User();
+            p.Name = tokenInfo.UserName;
+            User user = userService.getUserByName(p);
             Scrap scrap = JSONHelper.JSONToObject<Scrap>(body);
             scrap.Id = id;
+            scrap.OperatorId = user.Id;
             Scrap res = fixtureService.UpdateScrapStatus(scrap, status);
 
             if (res != null)
