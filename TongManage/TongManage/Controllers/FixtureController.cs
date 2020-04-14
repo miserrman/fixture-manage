@@ -35,6 +35,8 @@ namespace TongManage.Controllers
         [HttpPost]
         public string CreateDef(string body)
         {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
             TongsDefinition tongsDefinition = JSONHelper.JSONToObject<TongsDefinition>(body);
             tongsDefinition = fixtureService.createTongsDefinition(tongsDefinition);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(tongsDefinition));
