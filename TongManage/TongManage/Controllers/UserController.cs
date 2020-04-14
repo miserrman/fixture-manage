@@ -136,7 +136,7 @@ namespace TongManage.Controllers
         [HttpGet]
         public string getUserList()
         {
-            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
             TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
             int WorkcellId = tokenInfo.workCell;
             User user = new User();
@@ -153,7 +153,7 @@ namespace TongManage.Controllers
         [HttpGet]
         public string getUserById(int id)
         {
-            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
             TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
             int WorkcellId = tokenInfo.workCell;
             User user = new User();
@@ -178,7 +178,7 @@ namespace TongManage.Controllers
         [HttpGet]
         public string getUserByName(string userName)
         {
-            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
             TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
             int WorkcellId = tokenInfo.workCell;
             User user = new User();
@@ -203,7 +203,7 @@ namespace TongManage.Controllers
         [HttpGet]
         public string getUserByWorkNo(string workNo)
         {
-            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
             TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
             int WorkcellId = tokenInfo.workCell;
             User user = new User();
@@ -230,7 +230,7 @@ namespace TongManage.Controllers
         [HttpGet]
         public string getUserListByWorkCell(int workCell)
         {
-            string token = HttpContext.Request.Headers["Authorization"];//利用这个进行数据按部门进行隔离
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
             TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
             int WorkcellId = tokenInfo.workCell;
             User user = new User();
