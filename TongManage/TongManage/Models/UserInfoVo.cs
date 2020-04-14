@@ -8,12 +8,9 @@ namespace TongManage.Models
     public class UserInfoVo
     {
         private string name;
-        private int workcellId;
-        public UserInfoVo()
-        {
-            this.workcellId = -1;
-        }
+        private string workcellName;
+
         public string Name { get => name; set => name = value; }
-        public int WorkcellId { get => workcellId; set => workcellId = value; }
+        public string WorkcellName { get => workcellName; set => workcellName = value; }
     }
 }

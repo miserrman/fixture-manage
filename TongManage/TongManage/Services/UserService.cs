@@ -11,15 +11,16 @@ namespace TongManage.Services
     public class UserService
     {
         static UserDao userDao = new UserDao();
+        static WorkcellDao workcellDao = new WorkcellDao();
         /// <summary>
         /// 从token返回用户信息
         /// </summary>
         /// <param name="user">用户类</param>
         /// <returns></returns>
-        public User getInfoByToken(User userp)
+        public Workcell getInfoByToken(Workcell workcellp)
         {
-            User user = userDao.selectUserByUserName(userp);
-            return user;
+            Workcell workcell = workcellDao.selectWorkcellById(workcellp);
+            return workcell;
         }
 
 
