@@ -1,4 +1,14 @@
 ## 每日一骚话
+#### 2020-04-14 —— llh
+##### 更改
+1. 修改数据库结构（fixture_purchase），添加 code, def_id, seq_id 字段，删除 tong_id 字段。
+    ```
+    alter table fixture_purchase add code varchar(31);
+    alter table fixture_purchase add seq_id bigint(5);
+    alter table fixture_purchase add def_id bigint(9);
+    alter table fixture_purchase drop column tong_id;
+    ```
+---
 #### 2020-04-13 —— llh
 ##### 更改
 1. 修改数据库表结构（Purchase，Scrap，Repair_Record），为每个表添加 **status** 字段。状态的具体含义还需定义。
