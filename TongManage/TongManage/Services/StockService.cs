@@ -26,8 +26,10 @@ namespace TongManage.Services
         {
             inventoryRecord.GmtCreate = DateTime.Now.ToLocalTime();
             inventoryRecord.GmtModified = DateTime.Now.ToLocalTime();
-            inventoryRecordDao.insertInventoryRecord(inventoryRecord);
-            return inventoryRecord;
+
+            if (inventoryRecordDao.insertInventoryRecord(inventoryRecord) == 1)
+                return inventoryRecord;
+            else return null;
         }
 
         /// <summary>

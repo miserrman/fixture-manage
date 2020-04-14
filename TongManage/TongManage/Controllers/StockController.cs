@@ -25,6 +25,7 @@ namespace TongManage.Controllers
         */
 
         private static StockService stockService = new StockService();
+        private static UserService userService = new UserService();
 
         /// <summary>
         /// 创建一条入库记录
@@ -34,10 +35,20 @@ namespace TongManage.Controllers
         [HttpPost]
         public string CreateFixtureInRecord(string body)
         {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            User temp = new User();
+            temp.Name = tokenInfo.UserName;
+            User user = userService.getUserByName(temp);
+
             InventoryRecord inventoryRecord = JSONHelper.JSONToObject<InventoryRecord>(body);
             inventoryRecord.InOrOut = false;
-            stockService.createFixtureRecord(inventoryRecord);
-            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(inventoryRecord));
+            inventoryRecord.LogBy = user.Id;
+            inventoryRecord.LogOn = DateTime.Now;
+
+            if(stockService.createFixtureRecord(inventoryRecord) != null)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(inventoryRecord));
+            else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
 
         /// <summary>
@@ -48,10 +59,21 @@ namespace TongManage.Controllers
         [HttpPost]
         public string CreateFixtureOutRecord(string body)
         {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            User temp = new User();
+            temp.Name = tokenInfo.UserName;
+            User user = userService.getUserByName(temp);
+
             InventoryRecord inventoryRecord = JSONHelper.JSONToObject<InventoryRecord>(body);
             inventoryRecord.InOrOut = true;
+            inventoryRecord.LogBy = user.Id;
+            inventoryRecord.LogOn = DateTime.Now;
             stockService.createFixtureRecord(inventoryRecord);
-            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(inventoryRecord));
+
+            if (stockService.createFixtureRecord(inventoryRecord) != null)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(inventoryRecord));
+            else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
 
         /// <summary>
