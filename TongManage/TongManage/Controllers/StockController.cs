@@ -46,8 +46,10 @@ namespace TongManage.Controllers
             inventoryRecord.LogBy = user.Id;
             inventoryRecord.LogOn = DateTime.Now;
 
-            if(stockService.createFixtureRecord(inventoryRecord) != null)
-                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(inventoryRecord));
+            InventoryRecord res = stockService.createFixtureRecord(inventoryRecord);
+
+            if (res != null)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(res));
             else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
 
@@ -69,10 +71,10 @@ namespace TongManage.Controllers
             inventoryRecord.InOrOut = true;
             inventoryRecord.LogBy = user.Id;
             inventoryRecord.LogOn = DateTime.Now;
-            stockService.createFixtureRecord(inventoryRecord);
+            InventoryRecord res = stockService.createFixtureRecord(inventoryRecord);
 
-            if (stockService.createFixtureRecord(inventoryRecord) != null)
-                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(inventoryRecord));
+            if (res != null)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(res));
             else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
 
