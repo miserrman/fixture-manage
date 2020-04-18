@@ -29,8 +29,8 @@
     <select id="SelectAllScraps" parameterClass="Scrap" resultMap="Scrap">
       SELECT * from fixture_scrap
       WHERE is_deleted = 0
-      <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
-        workcell_id = #WorkCellId#
+      <isNotEqual prepend="AND" property="WorkcellId" compareValue="-1">
+        workcell_id = #WorkcellId#
       </isNotEqual>
     </select>
 
@@ -41,8 +41,8 @@
       <isNotEqual prepend="AND" property="Id" compareValue="-1">
         id = #Id#
       </isNotEqual>
-      <isNotEqual prepend="AND" property="WorkCellId" compareValue="-1">
-        workcell_id = #WorkCellId#
+      <isNotEqual prepend="AND" property="WorkcellId" compareValue="-1">
+        workcell_id = #WorkcellId#
       </isNotEqual>
     </select>
 
