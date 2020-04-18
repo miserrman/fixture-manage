@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using TongManage.Daos;
 using TongManage.Models;
+using TongManage.Utils;
 
 namespace TongManage.Services
 {
@@ -41,10 +42,11 @@ namespace TongManage.Services
         /// <returns>操作状态码</returns>
         public int deleteRecordById(InventoryRecord record)
         {
+            InventoryRecord inventoryRecord = inventoryRecordDao.selectInventoryRecordById(record);
             int status = inventoryRecordDao.deleteInventoryRecordById(record);
+
             if (1 == status)
             {
-                InventoryRecord inventoryRecord = inventoryRecordDao.selectInventoryRecordById(record);
                 inventoryRecord.GmtModified = DateTime.Now.ToLocalTime();
                 inventoryRecordDao.updateInventoryRecord(inventoryRecord);
             }

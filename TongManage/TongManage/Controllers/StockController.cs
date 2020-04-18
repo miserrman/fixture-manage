@@ -129,11 +129,16 @@ namespace TongManage.Controllers
         /// </summary>
         /// <param name="id">id</param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpPost]
         public string DeleteRecordById(int id)
         {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+
             InventoryRecord record = new InventoryRecord();
             record.Id = id;
+            record.WorkcellId = tokenInfo.workCell;
+
             int status = stockService.deleteRecordById(record);
             if (1 == status)
                 return JSONHelper.ObjectToJSON(ResponseUtil.Ok());
