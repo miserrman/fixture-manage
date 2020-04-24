@@ -55,6 +55,15 @@
         workcell_id = #WorkcellId#
       </isNotEqual>
     </select>
+    
+    <!--查询单条记录-->
+    <select id="SelectTongsEntityByCodeAndSeq" parameterClass="TongsEntity" resultMap="TongsEntity" >
+      SELECT * from fixture_tongs_entity
+      WHERE is_deleted = 0 and Code =#Code# and Seq_Id = #SeqId#
+      <isNotEqual prepend="AND" property="WorkcellId" compareValue="-1">
+        workcell_id = #WorkcellId#
+      </isNotEqual>
+    </select>
 
     <!--插入新记录-->
     <insert id="InsertTongsEntity" parameterClass="TongsEntity">

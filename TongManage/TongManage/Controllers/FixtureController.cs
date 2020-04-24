@@ -236,5 +236,39 @@ namespace TongManage.Controllers
                 return JSONHelper.ObjectToJSON(ResponseUtil.Ok(res));
             else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
+        /// <summary>
+        /// 获取部门所有的工具夹
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public string getAllEntity()
+        {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int WorkcellId = tokenInfo.workCell;
+            TongsEntity tongsEntity = new TongsEntity();
+            tongsEntity.WorkcellId = WorkcellId;
+            List<TongsEntityVo> tongsEntities = fixtureService.GetTongsEntities(tongsEntity);
+            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(tongsEntities));
+        }
+        /// <summary>
+        /// 根据code和seq定位工具夹实体
+        /// <param name="code"></param>
+        /// <param name="seq"></param>
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public string getEntity(string code,int seq)
+        {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int WorkcellId = tokenInfo.workCell;
+            TongsEntity tongsEntity = new TongsEntity();
+            tongsEntity.WorkcellId = WorkcellId;
+            tongsEntity.Code = code;
+            tongsEntity.SeqId = seq;
+            TongsEntityVo result = fixtureService.GetTongsEntity(tongsEntity);
+            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
+        }
     }
 }

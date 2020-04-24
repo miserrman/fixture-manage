@@ -198,6 +198,7 @@
     <Compile Include="Models\Scrap.cs" />
     <Compile Include="Models\TongsDefinition.cs" />
     <Compile Include="Models\TongsEntity.cs" />
+    <Compile Include="Models\TongsEntityVo.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserInfoVo.cs" />
     <Compile Include="Models\Workcell.cs" />

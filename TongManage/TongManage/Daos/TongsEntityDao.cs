@@ -33,6 +33,16 @@ namespace TongManage.Daos
         }
 
         /// <summary>
+        /// 查询单条夹具实体
+        /// </summary>
+        /// <param name="tongsEntity"></param>
+        /// <returns>单个夹具实体信息</returns>
+        public TongsEntity selectTongsEntityByCodeAndSeq(TongsEntity tongsEntity)
+        {
+            return BaseDao.QueryForObject<TongsEntity>("SelectTongsEntityByCodeAndSeq", tongsEntity);
+        }
+
+        /// <summary>
         /// 插入单条夹具实体内容
         /// </summary>
         /// <param name="tongsEntity"></param>
