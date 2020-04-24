@@ -1,4 +1,13 @@
 ## 每日一骚话
+#### 2020-04-24 —— llh
+##### 更改
+1. 添加三个接口（FixtureController）
+    * getAllEntity()：获取部门下所有工夹具（zx）
+    * getEntity(code, seq)：根据 code 和 seq 来查询工夹具（zx）
+    * GetFixtureInfoById(id)：根据 id 返回工夹具所有相关信息（llh）
+##### BUG
+1. 修复 RepairController 中 Get 方法失败的 Bug
+---
 #### 2020-04-18 —— llh
 ##### 更改
 1. 添加日志类（LogHelper)
