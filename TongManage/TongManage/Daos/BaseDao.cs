@@ -26,7 +26,14 @@ namespace TongManage.Daos
             ISqlMapper iSqlMapper = Mapper.Instance();
             if (iSqlMapper != null)
             {
-                return (int)iSqlMapper.Insert(statementName, t);
+                try
+                {
+                    return (int)iSqlMapper.Insert(statementName, t);
+                }
+                catch(Exception e)
+                {
+                    return 0;
+                }
             }
             return 0;
         }
