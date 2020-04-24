@@ -16,7 +16,7 @@
       <result property="Description" column="Description"/>
       <result property="RepairOverOn" column="Repair_Over_On"/>
       <result property="WorkcellId" column="Workcell_Id"/>
-      <result property="Status" colume="Status"/>
+      <result property="Status" column="Status"/>
       <result property="GmtCreate" column="Gmt_Create" />
       <result property="GmtModified" column="Gmt_Modified"  />
       <result property="IsDeleted" column="Is_Deleted" />
@@ -31,6 +31,9 @@
       WHERE is_deleted = 0
       <isNotEqual prepend="AND" property="WorkcellId" compareValue="-1">
         workcell_id = #WorkcellId#
+      </isNotEqual>
+      <isNotEqual prepend="AND" property="TongId" compareValue="-1">
+        tong_id = #TongId#
       </isNotEqual>
     </select>
 

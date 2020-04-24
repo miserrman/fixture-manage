@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using TongManage.Daos;
 using TongManage.Models;
+using TongManage.Models.Vo;
+using TongManage.Utils;
 
 namespace TongManage.Services
 {
@@ -20,6 +22,7 @@ namespace TongManage.Services
         private static RepairRecordDao repairRecordDao = new RepairRecordDao();
         private static TongsEntityDao tongsEntityDao = new TongsEntityDao();
         private static StockService stockService = new StockService();
+        private static InventoryRecordDao inventoryRecordDao = new InventoryRecordDao();
 
         /// <summary>
         /// 创建一个工夹具类别
@@ -258,5 +261,47 @@ namespace TongManage.Services
             result.PmPeriod = tongsDefinition.PmPeriod;
             return result;
         }
+
+        /// <summary>
+        ///  获取工夹具的所有信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="workcellId"></param>
+        /// <returns></returns>
+        public FixtureInfoVo GetFixtureInfoById(int id, int workcellId)
+        {
+            FixtureInfoVo fixtureInfoVo = new FixtureInfoVo();
+
+            TongsEntity tETemp = new TongsEntity();
+            tETemp.Id = id;
+            tETemp.WorkcellId = workcellId;
+            TongsEntity tongsEntity = tongsEntityDao.selectTongsEntityById(tETemp);
+            //LogHelper.WriteLog(typeof(String), tongsEntity.ToString());
+            if (null == tongsEntity) return null;
+
+            TongsDefinition tDTemp = new TongsDefinition();
+            tDTemp.Code = tongsEntity.Code;
+            tDTemp.WorkcellId = tongsEntity.WorkcellId;
+            TongsDefinition tongsDefinition = tongsDefinitionDao.selectTongsDefinitionByCode(tDTemp);
+
+            InventoryRecord iRTemp = new InventoryRecord();
+            iRTemp.TongId = tongsEntity.Id;
+            iRTemp.WorkcellId = tongsEntity.WorkcellId;
+            LogHelper.WriteLog(typeof(String), JSONHelper.ObjectToJSON(iRTemp));
+            List<InventoryRecord> inventoryRecords = inventoryRecordDao.selectAllInventoryRecords(iRTemp).ToList<InventoryRecord>();
+
+            RepairRecord rRTemp = new RepairRecord();
+            rRTemp.TongId = tongsEntity.Id;
+            rRTemp.WorkcellId = tongsEntity.WorkcellId;
+            LogHelper.WriteLog(typeof(String), JSONHelper.ObjectToJSON(rRTemp));
+            List<RepairRecord> repairRecords = repairRecordDao.selectAllRepairRecords(rRTemp).ToList<RepairRecord>();
+
+            fixtureInfoVo.TongsEntity = tongsEntity;
+            fixtureInfoVo.TongsDefinition = tongsDefinition;
+            fixtureInfoVo.InventoryRecords = inventoryRecords;
+            fixtureInfoVo.RepairRecords = repairRecords;
+
+            return fixtureInfoVo;
+    }
     }
 }

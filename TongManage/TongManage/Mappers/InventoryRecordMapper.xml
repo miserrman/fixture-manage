@@ -34,6 +34,9 @@
       <isNotEqual prepend="AND" property="WorkcellId" compareValue="-1">
         workcell_id = #WorkcellId#
       </isNotEqual>
+      <isNotEqual prepend="AND" property="TongId" compareValue="-1">
+        tong_id = #TongId#
+      </isNotEqual>
     </select>
 
     <!--查询单条记录-->

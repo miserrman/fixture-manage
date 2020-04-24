@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Data.SqlClient;
 using TongManage.Services;
 using TongManage.Utils;
+using TongManage.Models.Vo;
 
 namespace TongManage.Controllers
 {
@@ -269,6 +270,24 @@ namespace TongManage.Controllers
             tongsEntity.SeqId = seq;
             TongsEntityVo result = fixtureService.GetTongsEntity(tongsEntity);
             return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
+        }
+
+        /// <summary>
+        /// 获取工具夹所有信息
+        /// </summary>
+        /// <param name="id">工具夹id</param>
+        /// <returns></returns>
+        [HttpGet]
+        public string GetFixtureInfoById(int id)
+        {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int workcellId = tokenInfo.workCell;
+
+            FixtureInfoVo fixtureInfoVo = fixtureService.GetFixtureInfoById(id, workcellId);
+            if (null != fixtureInfoVo)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(fixtureInfoVo));
+            else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
     }
 }
