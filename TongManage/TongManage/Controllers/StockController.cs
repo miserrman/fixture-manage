@@ -46,8 +46,10 @@ namespace TongManage.Controllers
             inventoryRecord.LogBy = user.Id;
             inventoryRecord.LogOn = DateTime.Now;
 
-            if(stockService.createFixtureRecord(inventoryRecord) != null)
-                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(inventoryRecord));
+            InventoryRecord res = stockService.createFixtureRecord(inventoryRecord);
+
+            if (res != null)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(res));
             else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
 
@@ -69,10 +71,10 @@ namespace TongManage.Controllers
             inventoryRecord.InOrOut = true;
             inventoryRecord.LogBy = user.Id;
             inventoryRecord.LogOn = DateTime.Now;
-            stockService.createFixtureRecord(inventoryRecord);
+            InventoryRecord res = stockService.createFixtureRecord(inventoryRecord);
 
-            if (stockService.createFixtureRecord(inventoryRecord) != null)
-                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(inventoryRecord));
+            if (res != null)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(res));
             else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
 
@@ -127,11 +129,16 @@ namespace TongManage.Controllers
         /// </summary>
         /// <param name="id">id</param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpPost]
         public string DeleteRecordById(int id)
         {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+
             InventoryRecord record = new InventoryRecord();
             record.Id = id;
+            record.WorkcellId = tokenInfo.workCell;
+
             int status = stockService.deleteRecordById(record);
             if (1 == status)
                 return JSONHelper.ObjectToJSON(ResponseUtil.Ok());

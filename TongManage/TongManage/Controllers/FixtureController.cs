@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Data.SqlClient;
 using TongManage.Services;
 using TongManage.Utils;
+using TongManage.Models.Vo;
 
 namespace TongManage.Controllers
 {
@@ -234,6 +235,58 @@ namespace TongManage.Controllers
 
             if (res != null)
                 return JSONHelper.ObjectToJSON(ResponseUtil.Ok(res));
+            else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
+        }
+        /// <summary>
+        /// 获取部门所有的工具夹
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public string getAllEntity()
+        {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int WorkcellId = tokenInfo.workCell;
+            TongsEntity tongsEntity = new TongsEntity();
+            tongsEntity.WorkcellId = WorkcellId;
+            List<TongsEntityVo> tongsEntities = fixtureService.GetTongsEntities(tongsEntity);
+            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(tongsEntities));
+        }
+        /// <summary>
+        /// 根据code和seq定位工具夹实体
+        /// <param name="code"></param>
+        /// <param name="seq"></param>
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public string getEntity(string code,int seq)
+        {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int WorkcellId = tokenInfo.workCell;
+            TongsEntity tongsEntity = new TongsEntity();
+            tongsEntity.WorkcellId = WorkcellId;
+            tongsEntity.Code = code;
+            tongsEntity.SeqId = seq;
+            TongsEntityVo result = fixtureService.GetTongsEntity(tongsEntity);
+            return JSONHelper.ObjectToJSON(ResponseUtil.Ok(result));
+        }
+
+        /// <summary>
+        /// 获取工具夹所有信息
+        /// </summary>
+        /// <param name="id">工具夹id</param>
+        /// <returns></returns>
+        [HttpGet]
+        public string GetFixtureInfoById(int id)
+        {
+            string token = TokenHelper.GetTokenJson(HttpContext.Request.Headers["Authorization"]);//利用这个进行数据按部门进行隔离
+            TokenInfo tokenInfo = JSONHelper.JSONToObject<TokenInfo>(token);
+            int workcellId = tokenInfo.workCell;
+
+            FixtureInfoVo fixtureInfoVo = fixtureService.GetFixtureInfoById(id, workcellId);
+            if (null != fixtureInfoVo)
+                return JSONHelper.ObjectToJSON(ResponseUtil.Ok(fixtureInfoVo));
             else return JSONHelper.ObjectToJSON(ResponseUtil.Fail());
         }
     }

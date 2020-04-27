@@ -55,7 +55,16 @@
         workcell_id = #WorkcellId#
       </isNotEqual>
     </select>
-
+    
+    <!--查询单条记录-->
+    <select id="SelectTongsDefinitionByCode" parameterClass="TongsDefinition" resultMap="TongsDefinition" >
+      SELECT * from fixture_tongs_definition
+      WHERE is_deleted = 0 AND Code = #Code#
+      <isNotEqual prepend="AND" property="WorkcellId" compareValue="-1">
+        workcell_id = #WorkcellId#
+      </isNotEqual>
+    </select>
+    
     <!--插入新记录-->
     <insert id="InsertTongsDefinition" parameterClass="TongsDefinition">
       INSERT into fixture_tongs_definition ( Workcell_Id, Family_Id, Code, Name, Model, Part_No,

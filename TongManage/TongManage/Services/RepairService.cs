@@ -89,12 +89,12 @@ namespace TongManage.Services
         /// <returns></returns>
         public int DeleteRecordById(RepairRecord record)
         {
+            RepairRecord repairRecord = repairRecordDao.selectRepairRecordById(record);
+            repairRecord.GmtModified = DateTime.Now.ToLocalTime();
+            repairRecordDao.updateRepairRecord(repairRecord);
             int temp= repairRecordDao.deleteRepairRecordById(record);
             if(temp==1)
             {
-                RepairRecord repairRecord = repairRecordDao.selectRepairRecordById(record);
-                repairRecord.GmtModified= DateTime.Now.ToLocalTime();
-                repairRecordDao.updateRepairRecord(repairRecord);
                 return 1;
             }
             else

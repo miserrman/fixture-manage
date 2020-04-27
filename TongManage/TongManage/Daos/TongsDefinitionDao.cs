@@ -31,7 +31,15 @@ namespace TongManage.Daos
         {
             return BaseDao.QueryForObject<TongsDefinition>("SelectTongsDefinitionById", tongsDefinition);
         }
-
+        /// <summary>
+        /// 查询单条夹具定义信息
+        /// </summary>
+        /// <param name="tongsDefinition"></param>
+        /// <returns>单条夹具定义信息</returns>
+        public TongsDefinition selectTongsDefinitionByCode(TongsDefinition tongsDefinition)
+        {
+            return BaseDao.QueryForObject<TongsDefinition>("SelectTongsDefinitionByCode", tongsDefinition);
+        }
         /// <summary>
         /// 插入单条夹具定义
         /// </summary>

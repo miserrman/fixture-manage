@@ -21,9 +21,9 @@ namespace TongManage.Models
 
         public RepairRecord()
         {
-            this.id = -1;
-            this.tongId = -1;
-            this.workcellId = -1;
+            this.Id = -1;
+            this.TongId = -1;
+            this.WorkcellId = -1;
             this.Status = -1;
         }
 
@@ -32,10 +32,10 @@ namespace TongManage.Models
         public int TongId { get => tongId; set => tongId = value; }
         public string Description { get => description; set => description = value; }
         public DateTime RepairOverOn { get => repairOverOn; set => repairOverOn = value; }
+        public int WorkcellId { get => workcellId; set => workcellId = value; }
+        public int Status { get => status; set => status = value; }
         public DateTime GmtCreate { get => gmtCreate; set => gmtCreate = value; }
         public DateTime GmtModified { get => gmtModified; set => gmtModified = value; }
         public bool IsDeleted { get => isDeleted; set => isDeleted = value; }
-        public int WorkcellId { get => workcellId; set => workcellId = value; }
-        public int Status { get => status; set => status = value; }
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using TongManage.Daos;
 using TongManage.Models;
+using TongManage.Models.Vo;
+using TongManage.Utils;
 
 namespace TongManage.Services
 {
@@ -18,8 +20,9 @@ namespace TongManage.Services
         private static PurchaseDao purchaseDao = new PurchaseDao();
         private static ScrapDao scrapDao = new ScrapDao();
         private static RepairRecordDao repairRecordDao = new RepairRecordDao();
-
+        private static TongsEntityDao tongsEntityDao = new TongsEntityDao();
         private static StockService stockService = new StockService();
+        private static InventoryRecordDao inventoryRecordDao = new InventoryRecordDao();
 
         /// <summary>
         /// 创建一个工夹具类别
@@ -191,5 +194,114 @@ namespace TongManage.Services
 
             return true;
         }
+        /// <summary>
+        /// 获取所有工具夹实体
+        /// </summary>
+        /// <param name="tongsEntity"></param>
+        /// <returns></returns>
+        public List<TongsEntityVo> GetTongsEntities(TongsEntity tongsEntity)
+        {
+            List <TongsEntity> tongsList=tongsEntityDao.selectAllTongsEntitys(tongsEntity).ToList();
+            List<TongsEntityVo> result = new List<TongsEntityVo>(tongsList.Count());
+            for(int i=0;i< tongsList.Count();i++)
+            {
+                TongsDefinition p = new TongsDefinition();
+                p.Code = tongsList[i].Code;
+                TongsDefinition tongsDefinition = tongsDefinitionDao.selectTongsDefinitionByCode(p);
+                var ParentType = typeof(TongsEntity);
+                var Properties = ParentType.GetProperties();
+                foreach (var Propertie in Properties)
+                {
+                    if (Propertie.CanRead && Propertie.CanWrite)
+                    {
+                        Propertie.SetValue(result[i], Propertie.GetValue(tongsList[i], null), null);
+                    }
+                }
+                result[i].FamilyId = tongsDefinition.FamilyId;
+                result[i].Name = tongsDefinition.Name;
+                result[i].Model = tongsDefinition.Model;
+                result[i].PartNo = tongsDefinition.PartNo;
+                result[i].UserdFor = tongsDefinition.UserdFor;
+                result[i].Upl = tongsDefinition.Upl;
+                result[i].OwnerId = tongsDefinition.OwnerId;
+                result[i].Remark = tongsDefinition.Remark;
+                result[i].PmPeriod = tongsDefinition.PmPeriod;
+            }
+            return result;
+        }
+        /// <summary>
+        /// 获取特定的工具夹实体
+        /// </summary>
+        /// <param name="tongsEntity"></param>
+        /// <returns></returns>
+        public TongsEntityVo GetTongsEntity(TongsEntity tongsEntity)
+        {
+            TongsEntityVo result = new TongsEntityVo();
+            TongsEntity tongs = tongsEntityDao.selectTongsEntityByCodeAndSeq(tongsEntity);
+            TongsDefinition p = new TongsDefinition();
+            p.Code = tongs.Code;
+            TongsDefinition tongsDefinition = tongsDefinitionDao.selectTongsDefinitionByCode(p);
+            var ParentType = typeof(TongsEntity);
+            var Properties = ParentType.GetProperties();
+            foreach (var Propertie in Properties)
+            {
+                if (Propertie.CanRead && Propertie.CanWrite)
+                {
+                    Propertie.SetValue(result, Propertie.GetValue(tongs, null), null);
+                }
+            }
+            result.FamilyId = tongsDefinition.FamilyId;
+            result.Name = tongsDefinition.Name;
+            result.Model = tongsDefinition.Model;
+            result.PartNo = tongsDefinition.PartNo;
+            result.UserdFor = tongsDefinition.UserdFor;
+            result.Upl = tongsDefinition.Upl;
+            result.OwnerId = tongsDefinition.OwnerId;
+            result.Remark = tongsDefinition.Remark;
+            result.PmPeriod = tongsDefinition.PmPeriod;
+            return result;
+        }
+
+        /// <summary>
+        ///  获取工夹具的所有信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="workcellId"></param>
+        /// <returns></returns>
+        public FixtureInfoVo GetFixtureInfoById(int id, int workcellId)
+        {
+            FixtureInfoVo fixtureInfoVo = new FixtureInfoVo();
+
+            TongsEntity tETemp = new TongsEntity();
+            tETemp.Id = id;
+            tETemp.WorkcellId = workcellId;
+            TongsEntity tongsEntity = tongsEntityDao.selectTongsEntityById(tETemp);
+            //LogHelper.WriteLog(typeof(String), tongsEntity.ToString());
+            if (null == tongsEntity) return null;
+
+            TongsDefinition tDTemp = new TongsDefinition();
+            tDTemp.Code = tongsEntity.Code;
+            tDTemp.WorkcellId = tongsEntity.WorkcellId;
+            TongsDefinition tongsDefinition = tongsDefinitionDao.selectTongsDefinitionByCode(tDTemp);
+
+            InventoryRecord iRTemp = new InventoryRecord();
+            iRTemp.TongId = tongsEntity.Id;
+            iRTemp.WorkcellId = tongsEntity.WorkcellId;
+            LogHelper.WriteLog(typeof(String), JSONHelper.ObjectToJSON(iRTemp));
+            List<InventoryRecord> inventoryRecords = inventoryRecordDao.selectAllInventoryRecords(iRTemp).ToList<InventoryRecord>();
+
+            RepairRecord rRTemp = new RepairRecord();
+            rRTemp.TongId = tongsEntity.Id;
+            rRTemp.WorkcellId = tongsEntity.WorkcellId;
+            LogHelper.WriteLog(typeof(String), JSONHelper.ObjectToJSON(rRTemp));
+            List<RepairRecord> repairRecords = repairRecordDao.selectAllRepairRecords(rRTemp).ToList<RepairRecord>();
+
+            fixtureInfoVo.TongsEntity = tongsEntity;
+            fixtureInfoVo.TongsDefinition = tongsDefinition;
+            fixtureInfoVo.InventoryRecords = inventoryRecords;
+            fixtureInfoVo.RepairRecords = repairRecords;
+
+            return fixtureInfoVo;
+    }
     }
 }
