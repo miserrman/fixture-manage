@@ -185,6 +185,7 @@
     <Compile Include="Daos\TongsDefinitionDao.cs" />
     <Compile Include="Daos\TongsEntityDao.cs" />
     <Compile Include="Daos\UserDao.cs" />
+    <Compile Include="Daos\VO\FixtureInfoVo.cs" />
     <Compile Include="Daos\Workcell.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -208,6 +209,7 @@
     <Compile Include="Services\StockService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\JSONHelper.cs" />
+    <Compile Include="Utils\LogHelper.cs" />
     <Compile Include="Utils\MD5Util.cs" />
     <Compile Include="Utils\ResponseUtil.cs" />
     <Compile Include="Utils\TokenInfo.cs" />
